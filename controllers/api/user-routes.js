@@ -57,6 +57,7 @@ router.post('/', (req, res) => {
         "blocked": [ user_id, user_id ]
     }
     */
+    // using req.body - necessary to outline every input?
     User.create(req.body)
         .then(dbUserData => {
             // save username and id to session and set loggedIn to true
