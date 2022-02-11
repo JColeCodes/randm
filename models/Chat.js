@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Message extends Model {}
+class Chat extends Model {}
 
-Message.init(
+Chat.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,7 +11,7 @@ Message.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    user_id: {
+    sender_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -19,25 +19,21 @@ Message.init(
         key: 'id',
       },
     },
-    chat_id: {
+    receiver_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'chat',
+        model: 'user',
         key: 'id',
       },
-    },
-    message: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
   },
   {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'message',
+    modelName: 'chat',
   }
 );
 
-module.exports = Message;
+module.exports = Chat;
