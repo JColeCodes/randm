@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
             },
             attributes: [
                 'id',
-                'messages',
                 'created_at'
             ],
             // display newest messages first
