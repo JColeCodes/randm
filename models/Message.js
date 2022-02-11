@@ -11,7 +11,7 @@ Message.init(
             primaryKey: true,
             autoIncrement: true,
     },
-    user_1: {
+    user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -19,13 +19,17 @@ Message.init(
             key: 'id'
           }
     },
-    user_2: {
+    chat_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'user',
+            model: 'chat',
             key: 'id'
           }
+    },
+    message: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
     },
     {
