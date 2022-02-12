@@ -60,14 +60,15 @@ router.post('/', (req, res) => {
     // using req.body - necessary to outline every input?
     User.create(req.body)
         .then(dbUserData => {
+            res.json(dbUserData);
             // save username and id to session and set loggedIn to true
-            req.session.save(() => {
-                req.session.user_id = dbUserData.id;
-                req.session.email = dbUserData.email;
-                req.session.loggedIn = true;
-                // JSON response
-                res.json(dbUserData);
-            });
+            // req.session.save(() => {
+            //     req.session.user_id = dbUserData.id;
+            //     req.session.email = dbUserData.email;
+            //     req.session.loggedIn = true;
+            //     // JSON response
+            //     res.json(dbUserData);
+            // });
         })
         .catch(err => {
             console.log(err);
