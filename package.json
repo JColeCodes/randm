@@ -1,34 +1,38 @@
 {
-  "name": "randm",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JColeCodes/randm.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JColeCodes/randm/issues"
-  },
-  "homepage": "https://github.com/JColeCodes/randm#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "connect-session-sequelize": "^7.1.2",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.2",
-    "express-handlebars": "^6.0.2",
-    "express-session": "^1.17.2",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.16.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/express-session": "^1.17.4"
-  }
+    "name": "randm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.js",
+        "seed": "node seeds/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/JColeCodes/randm.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/JColeCodes/randm/issues"
+    },
+    "homepage": "https://github.com/JColeCodes/randm#readme",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "connect-session-sequelize": "^7.1.2",
+        "dotenv": "^16.0.0",
+        "eslint": "^8.8.0",
+        "eslint-config-prettier": "^8.3.0",
+        "express": "^4.17.2",
+        "express-handlebars": "^6.0.2",
+        "express-session": "^1.17.2",
+        "mysql2": "^2.3.3",
+        "prettier": "^2.5.1",
+        "sequelize": "^6.16.0"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.0",
+        "@types/express-session": "^1.17.4"
+    }
 }
