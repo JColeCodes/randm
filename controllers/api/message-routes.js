@@ -25,11 +25,9 @@ router.post('/', (req, res) => {
     // check the session login status
     //if (req.session) {
     Message.create({
-            // need to update to match Message.js
-            // account for user_2?
-            message: req.body.message,
-            message_id: req.body.message_id,
-            user_id: req.body.post_id
+            // will need to pull receiver id from /:id params
+            receiver_id: req.body.receiver_id,
+            message_text: req.body.message_text
                 // use the id from the session
                 //user_id: req.session.user_id
         })

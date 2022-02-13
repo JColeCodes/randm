@@ -6,8 +6,8 @@ const { User, Message } = require('../models');
 router.get('/', (req, res) => {
     Message.findAll({
             where: {
-                // grab user id from the session data and search in Message the matching user_1 id
-                user_1: req.session.user_id
+                // grab user id from the session data
+                user_id: req.session.user_id
             },
             attributes: [
                 'id',

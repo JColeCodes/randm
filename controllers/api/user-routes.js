@@ -18,13 +18,12 @@ router.get('/', (req, res) => {
 // find one user by id
 router.get('/:id', (req, res) => {
     User.findOne({
-            attributes: { exclude: ['password'] },
             where: {
                 id: req.params.id
             },
             include: [{
                 model: Message,
-                attributes: ['id', 'user_1', 'user_2', 'messages', 'created_at']
+                attributes: ['id', 'receiver_id', 'message_text', 'created_at']
             }]
         })
         .then(dbUserData => {
