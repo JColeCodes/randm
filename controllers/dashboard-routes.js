@@ -10,6 +10,11 @@ router.get('/', (req, res) => {
       [Op.or]: [
         // grab user id from the session data
         { receiver_id: req.session.user_id },
+        { sender_id: req.params.id },
+      ],
+      [Op.or]: [
+        // grab user id from the session data
+        { receiver_id: req.params.id },
         { sender_id: req.session.user_id },
       ],
     },
