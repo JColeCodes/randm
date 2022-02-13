@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANDM</title>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/d6ff1e54be.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <div class="logged-in">
+        <header>
+            <div class="logo">
+                <img src="./assets/images/logo-light.svg" alt="randm logo" />
+              </div>
+              <div class="welcome-info">
+                  Hello, {{first_name}}! 
+                  <i class="fa-solid fa-circle-user"></i>
+              </div>
+        </header>
+        <main>
+            <div class="recent-chat">
+                <ul>
+                    <li>
+                        <h3 class="name">{{first_name}} {{last_name}}</h3>
+                        <span class="latest-message">{{}}</span>
+                    </li>
+                    <li class="selected">
+                        <h3 class="name">{{first_name}} {{last_name}}</h3>
+                        <span class="latest-message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut perferendis voluptate quam non dolorem eius dolor accusamus animi nobis error adipisci expedita, illo nostrum consequuntur dolores odit culpa aliquam asperiores!</span>
+                    </li>
+                    <li>
+                        <h3 class="name">{{first_name}} {{last_name}}</h3>
+                        <span class="latest-message">{{}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="current-chat">
+                <div class="user-info">
+                    <p class="in-chat">You're in a chat with</p>
+                    <h2 class="chatter-name">{{first_name}} {{last_name}}</h2>
+                    <p class="chatter-info">{{birthday}}, {{gender}}, {{sexual_preference}}</p>
+                    <p class="chatter-bio">{{bio}}</p>
+                </div>
+                <div class="messages">
+                    <ol>
+                        <li class="received">
+                            <div class="message">Short one</div>
+                            <p class="sent-time">12:52 PM</p>
+                        </li>
+                        <li class="received">
+                            <div class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos eveniet aliquam odit fuga reprehenderit maxime aliquid ex? Sed, quasi eveniet? Voluptates similique harum laborum facere quo illum repellat temporibus nobis!</div>
+                            <p class="sent-time">5:52 PM</p>
+                        </li>
+                        <li class="sent">
+                            <div class="message">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos eveniet aliquam odit fuga reprehenderit maxime aliquid ex? Sed, quasi eveniet? Voluptates similique harum laborum facere quo illum repellat temporibus nobis!</div>
+                            <p class="sent-time">5:52 PM</p>
+                        </li>
+                        <li class="received">
+                            <div class="message">Maybe a medium length one</div>
+                            <p class="sent-time">6:24 PM</p>
+                        </li>
+                        <li class="sent">
+                            <div class="message">Here's another one from the sender</div>
+                            <p class="sent-time">6:27 PM</p>
+                        </li>
+                    </ol>
+                </div>
+                <form class="send-message">
+                    <input type="text" id="message" />
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
