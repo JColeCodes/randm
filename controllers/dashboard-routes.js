@@ -7,9 +7,10 @@ router.get('/', (req, res) => {
   Message.findAll({
     where: {
       // grab user id from the session data
-      user_id: req.session.user_id,
+      receiver_id: req.session.user_id,
+      sender_id: req.session.user_id,
     },
-    attributes: ['id', 'created_at'],
+    attributes: ['id', 'message_text', 'created_at'],
     // display newest messages first
     order: [['created_at', 'DESC']],
     include: [
