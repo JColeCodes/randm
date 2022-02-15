@@ -9,26 +9,9 @@
 </head>
 <body>
   <div class="wrapper">
-    <header>
-      <h1>
-        <a href="/">RANDM</a>
-      </h1>
-        <nav>
-          <span><a href="/">home</a></span>
-          {{#if loggedIn}}
-          <a href="/dashboard">dashboard</a>
-          <button id="logout" class="btn-no-style">logout</button>
-          {{else}}
-          <a href="/login">login</a>
-          {{/if}}
-        </nav>
-    </header>
     <main>
       {{{ body }}}
     </main>
-    <footer>
-      Thanks for visiting!
-    </footer>
   </div>
 
   {{#if loggedIn}}
