@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
     //if (req.session) {
     Message.create({
             // will need to pull receiver id from /:id params
+            sender_id: req.body.sender_id,
             receiver_id: req.body.receiver_id,
             message_text: req.body.message_text
                 // use the id from the session
