@@ -78,12 +78,31 @@ router.get('/chat', (req, res) => {
                 console.log(user);
     
                 const messages = dbMessageData.map(message => message.get({ plain: true }));
+                const latestChat = [];
+                messages.forEach(message => {
+                    if (message.sender_id !== 1 && !latestChat.includes(message.sender_id)) {
+                        latestChat.push(message.sender_id);
+                    } else if (message.receiver_id !== 1 && !latestChat.includes(message.receiver_id)) {
+                        latestChat.push(message.receiver_id);
+                    }
+                });
+                const recentNames = [];
+                for (var i = 0; i < latestChat.length; i++) {
+                    for (var j = 0; j < messages.length; j++) {
+                        if (messages[j].sender_id == latestChat[i] || messages[j].receiver_id == latestChat[i]){
+                            recentNames.push(messages[j]);
+                        }
+                    }
+                }
                 console.log(messages);
+                console.log(latestChat);
+                console.log(recentNames);
 
                 // render all messages on homepage
                 res.render('chat', {
                     messages, 
                     user,
+                    latestChat,
                     loggedIn: req.session.loggedIn,
                     chatHome: true
                 });
