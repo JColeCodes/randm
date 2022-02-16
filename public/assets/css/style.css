@@ -1,0 +1,245 @@
+:root {
+    --main-color: #59276D; /* Main Color */
+    --secondary-color: #BC34AE; /* Secondary Color */
+    --secondary-lighter: #ED67DF; /* Lighter Version of Secondary Color */
+    --lightest-color: #F6F9F9; /* Light-Gray Color */
+    --mid-color: #AFB5B6; /* Mid-Gray Color */
+    --darkest-color: #7C8385; /* Darker-Gray Color */
+    --sidebar-color: #EDF3F3; /* Sidebar Background Color */
+    --sidebar-highlight-color: #E0E9E9; /* Sidebar Highlight Color */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1;
+    background-color: var(--lightest-color);
+    color: var(--darkest-color);
+}
+
+a, a:hover, button, button:hover, li, li:hover { transition: all 0.5s ease-in-out; }
+
+a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--secondary-color);
+}
+input:focus {
+    outline: 2px solid var(--secondary-lighter);
+}
+
+/* IF NOT LOGGED IN */
+.unlogged-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: calc(100vh - 40px);
+}
+/* Display logo on left */
+.unlogged-page .logo {
+    width: calc(55% - 30px);
+    margin: 0 10px 0 20px;
+}
+.unlogged-page .logo img {
+    width: 100%;
+}
+/* Display form on right */
+.unlogged-page .forms {
+    width: calc(45% - 30px);
+    margin: 0 10px 0 20px;
+    background-color: var(--sidebar-color);
+    padding: 20px;
+    font-size: 1.2em;
+}
+.unlogged-page .forms input {
+    padding: 10px;
+    margin: 5px 0 15px;
+    width: 100%;
+    font-size: .9em;
+    background-color: white;
+    border: 1px solid var(--sidebar-highlight-color);
+    color: var(--darkest-color);
+}
+.unlogged-page .forms button {
+    padding: 10px;
+    font-size: .9em;
+    border: none;
+    background-color: var(--secondary-lighter);
+    color: white;
+}
+.unlogged-page .forms .form-message {
+    font-size: .9em;
+    font-style: italic;
+    margin: 15px 0 0;
+}
+
+/* IF USER IS LOGGED IN */
+ .logged-in {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
+    height: 100vh;
+ }
+ /* Header */
+.logged-in header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    background-color: var(--main-color);
+    color: white;
+}
+.logged-in header .logo {
+    width: 10%;
+}
+.logged-in header .logo img {
+    height: 60px;
+    margin: 10px 0;
+}
+.logged-in header .welcome-info i {
+    font-size: 1.5em;
+}
+/* Main Content */
+.logged-in main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex: 1;
+}
+/* Recent Chat Names on left */
+.recent-chat {
+    width: 30%;
+    background-color: var(--sidebar-color);
+}
+.recent-chat ul li {
+    padding: 20px;
+    border-bottom: 2px solid var(--sidebar-highlight-color);
+}
+.recent-chat ul li.selected {
+    border: none;
+    background-color: var(--sidebar-highlight-color);
+}
+.recent-chat ul li h3.name {
+    color: var(--main-color);
+    font-size: 1.3em;
+}
+.recent-chat ul li span.latest-message {
+    color: var(--darkest-color);
+    font-style: italic;
+    padding: 5px 0 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* Current Chat Box on right */
+.current-chat {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    flex-flow: column;
+    height: 100%;
+}
+/* About the chatter at top */
+.current-chat .user-info {
+    margin: 15px 20px 0;
+    padding: 0 0 10px 0;
+    border-bottom: 2px solid var(--sidebar-highlight-color);
+    text-align: center;
+}
+.current-chat .user-info h2.chatter-name {
+    color: var(--main-color);
+    font-size: 1.8em;
+    font-weight: bold;
+    padding: 3px;
+}
+.current-chat .user-info p {
+    color: var(--mid-color);
+    padding: 5px;
+}
+.current-chat .user-info p.in-chat {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.current-chat .user-info p.chatter-info {
+    font-style: italic;
+}
+.current-chat .user-info p.chatter-bio {
+    color: var(--darkest-color);
+}
+/* Send Message Input at bottom */
+.current-chat .send-message {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+.current-chat .send-message input {
+    flex: 1;
+    background-color: white;
+    color: var(--darkest-color);
+    padding: 15px;
+    font-size: 1em;
+    border: 1px solid var(--sidebar-highlight-color);
+}
+.current-chat .send-message button {
+    background-color: var(--secondary-lighter);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    font-size: 1.1em;
+    font-weight: bolder;
+}
+/* Chat box in middle */
+.current-chat .messages {
+    flex: 1;
+    padding: 0 10px;
+    display: flex;
+    height: 100%;
+}
+.current-chat .messages ol {
+    display: inline-block;
+    align-self: flex-end;
+    list-style-type: none;
+}
+.current-chat .messages ol li {
+    display: block;
+    margin: 10px;
+}
+.current-chat .messages ol li .message {
+    padding: 12px 15px;
+    border-radius: 10px;
+    max-width: 50%; width: auto;
+    display: inline-block;
+    color: white;
+    line-height: 1.3;
+}
+.current-chat .messages ol li.received {
+    text-align: left;
+}
+.current-chat .messages ol li.sent {
+    text-align: right;
+}
+.current-chat .messages ol li.received .message {
+    background-color: var(--secondary-color);
+}
+.current-chat .messages ol li.sent .message {
+    background-color: var(--main-color);
+}
+.current-chat .messages ol li p.sent-time {
+    color: var(--mid-color);
+    text-transform: uppercase;
+    font-size: .9em;
+    margin: 5px;
+}

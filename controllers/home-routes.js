@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { User, Message } = require('../models');
+const { Op } = require('sequelize');
 
 // Redirect homepage to either login page (if not logged in) OR chat page (if logged in)
 router.get('/', (req, res) => {
@@ -16,11 +17,21 @@ router.get('/', (req, res) => {
 // show homepage if user is logged in, else render login.handlebars
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
-        res.redirect('/');
+        res.redirect('/chat');
         return;
     }
 
     res.render('login');
+});
+
+// show register page if user is logged out
+router.get('/register', (req, res) => {
+    if (req.session.loggedIn) {
+        res.redirect('/chat');
+        return;
+    }
+
+    res.render('register');
 });
 
 
@@ -28,14 +39,16 @@ router.get('/login', (req, res) => {
 router.get('/chat', (req, res) => {
     Message.findAll({
             where: {
-                receiver_id: req.session.id,
-                sender_id: req.session.id
+                [Op.or]: [
+                    { receiver_id: 1 },
+                    { sender_id: 1 }
+                ]
             },
             // perform inner join on message table with message table to find all sent and received by one user?
             include: [{
                 model: User,
                 required: true,
-                attributes: ['id'],
+                attributes: ['id', 'first_name'],
                 include: {
                     model: Message,
                     required: true,
