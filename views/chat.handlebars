@@ -4,27 +4,30 @@
         <img src="/assets/images/logo-light.svg" alt="randm logo" />
       </div>
       <div class="welcome-info">
+        {{#each user}}
           Hello, {{first_name}}! 
           <i class="fa-solid fa-circle-user"></i>
+          {{/each}}
       </div>
   </header>
-<!--  <div class="recent-chat">
+
+<div class="recent-chat">
     <ul>
+      {{#each messages}}
       <li>
         <h3 class="name">{{first_name}} {{last_name}}</h3>
-        <span class="latest-message"></span>
+        <span class="latest-message">
+          {{#if @last}}{{message_text}}{{/if}}
+          </span>
       </li>
-      <li class="selected">
-        <h3 class="name">{{first_name}} {{last_name}}</h3>
-        <span class="latest-message"></span>
-      </li>
-      <li>
-        <h3 class="name">{{first_name}} {{last_name}}</h3>
-        <span class="latest-message"></span>
-      </li>
+      {{/each}}
     </ul>
-  </div>
-  <div class="current-chat">
+</div>
+
+<div class="current-chat">
+    {{#if chatHome}}
+    <div>This is the chat's homepage!</div>
+    {{else}}
     <div class="user-info">
       <p class="in-chat">You're in a chat with</p>
       <h2 class="chatter-name">{{first_name}} {{last_name}}</h2>
@@ -56,9 +59,10 @@
       </li>
     </ol>
   </div>
+  {{/if}}
 </div>
 
 <form class="send-message">
   <input type="text" id="message"/>
   <button type="submit">Send</button>
-</form> -->
+</form>

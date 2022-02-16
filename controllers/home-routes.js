@@ -35,7 +35,7 @@ router.get('/register', (req, res) => {
 });
 
 
-// find all messages received or sent by user, display previews on homepage
+// // find all messages received or sent by user, display previews on homepage
 router.get('/chat', (req, res) => {
     Message.findAll({
             where: {
@@ -48,7 +48,7 @@ router.get('/chat', (req, res) => {
             include: [{
                 model: User,
                 required: true,
-                attributes: ['id', 'first_name'],
+                attributes: ['id', 'first_name', 'last_name'],
                 include: {
                     model: Message,
                     required: true,
@@ -57,22 +57,49 @@ router.get('/chat', (req, res) => {
                 }
             }]
         })
-        .then(dbPostData => {
+        .then(dbMessageData => {
             //res.json(dbUserData);
 
-            const messages = dbPostData.map(message => message.get({ plain: true }));
+            User.findAll({
+                where: {
+                    id: 1
+                },
+                // perform inner join on message table with message table to find all sent and received by one user?
+                attributes: ['id', 'first_name'],
+                include: [{
+                    model: Message,
+                    required: true
+                }]
+            })
+            .then(dbUserData => {
+                //res.json(dbUserData);
+    
+                const user = dbUserData.map(user => user.get({ plain: true }));
+                console.log(user);
+    
+                const messages = dbMessageData.map(message => message.get({ plain: true }));
+                console.log(messages);
 
-            // render all messages on homepage
-            res.render('chat', {
-                messages,
-                loggedIn: req.session.loggedIn
+                // render all messages on homepage
+                res.render('chat', {
+                    messages, 
+                    user,
+                    loggedIn: req.session.loggedIn,
+                    chatHome: true
+                });
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
             });
+            
         })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
         });
 });
+
 
 // find all messages between 2 specific users, use session id for user 1 and params id for user 2
 router.get('/chat/:id', (req, res) => {
@@ -107,7 +134,8 @@ router.get('/chat/:id', (req, res) => {
             // render all messages on homepage
             res.render('chat', {
                 messages,
-                loggedIn: req.session.loggedIn
+                loggedIn: req.session.loggedIn,
+                chatHome: false
             });
         })
         .catch(err => {
