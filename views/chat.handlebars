@@ -25,19 +25,22 @@
       </ul>
   </div>
 
-  <div class="current-chat">
-      {{#if chatHome}}
-      <div class="chat-home">
-        This is the chat's homepage!
-        <button>Randomize a new chat</button>
-      </div>
-      {{else}}
-      <div class="user-info">
-        <p class="in-chat">You're in a chat with</p>
-        <h2 class="chatter-name">{{first_name}} {{last_name}}</h2>
-        <p class="chatter-info">{{birthday}}, {{gender}}, {{sexual_preference}}</p>
-        <p class="chatter-bio">{{bio}}</p>
-      </div>
+<div class="current-chat">
+    {{#if chatHome}}
+    <div class="chat-home">
+      This is the chat's homepage!
+      <button>Randomize a new chat</button>
+    </div>
+    {{else}}
+    <div class="user-info">
+      <p class="in-chat">You're in a chat with</p>
+      {{#each messages}}
+      {{#if @first}}
+      <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
+      <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
+      <p class="chatter-bio">{{user.bio}}</p>
+      {{/if}}
+      {{/each}}
     </div>
     <div class="messages">
       <ol>
