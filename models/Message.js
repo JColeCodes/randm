@@ -10,6 +10,14 @@ Message.init({
         primaryKey: true,
         autoIncrement: true,
     },
+    sender_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'user',
+            key: 'id',
+        },
+    },
     receiver_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
