@@ -4,28 +4,28 @@
         <img src="/assets/images/logo-light.svg" alt="randm logo" />
       </div>
       <div class="welcome-info">
-        {{#each user}}
+        {{#with userLatest.currentUser}}
           Hello, {{first_name}}! 
           <i class="fa-solid fa-circle-user"></i>
-          {{/each}}
+          {{/with}}
       </div>
   </header>
 
 <main>
   <div class="recent-chat">
       <ul>
-        {{#each messages}}
+        {{#each userLatest.latestChat}}
         <li>
-          <h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+          <h3 class="name">{{first_name}} {{last_name}}</h3>
           <span class="latest-message">
-            {{#if @last}}{{message_text}}{{/if}}
+            {{latestMessage}}
             </span>
         </li>
         {{/each}}
       </ul>
   </div>
 
-<div class="current-chat">
+  <div class="current-chat">
     {{#if chatHome}}
     <div class="chat-home">
       This is the chat's homepage!
@@ -44,33 +44,19 @@
     </div>
     <div class="messages">
       <ol>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
+        {{#each messages}}
+        <li class="{{get_chat_class sender_id ../userLatest.currentUser.id}}">
+          <div class="message">{{message_text}}</div>
+          <p class="sent-time">{{created_at}}</p>
         </li>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="sent">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="sent">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
+        {{/each}}
       </ol>
     </div>
-    {{/if}}
-  </div>
 
   <form class="send-message">
     <input type="text" id="message"/>
     <button type="submit">Send</button>
   </form>
+    {{/if}}
+  </div>
 </main>
