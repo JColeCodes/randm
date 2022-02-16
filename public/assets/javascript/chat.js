@@ -27,8 +27,6 @@ async function sendMessageFormHandler(event) {
         window.location.toString().split('/').length - 1
     ];
 
-    console.log('send button text: ' + message_text + ' sender_id: ' + sender_id + ' receiver_id: ' + receiver_id);
-
     if (message_text) {
         const response = await fetch('/api/messages', {
             method: 'post',
