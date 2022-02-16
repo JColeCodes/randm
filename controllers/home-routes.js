@@ -61,38 +61,38 @@ router.get('/chat', (req, res) => {
             //res.json(dbUserData);
 
             User.findAll({
-                where: {
-                    id: 1
-                },
-                // perform inner join on message table with message table to find all sent and received by one user?
-                attributes: ['id', 'first_name'],
-                include: [{
-                    model: Message,
-                    required: true
-                }]
-            })
-            .then(dbUserData => {
-                //res.json(dbUserData);
-    
-                const user = dbUserData.map(user => user.get({ plain: true }));
-                console.log(user);
-    
-                const messages = dbMessageData.map(message => message.get({ plain: true }));
-                console.log(messages);
+                    where: {
+                        id: 1
+                    },
+                    // perform inner join on message table with message table to find all sent and received by one user?
+                    attributes: ['id', 'first_name'],
+                    include: [{
+                        model: Message,
+                        required: true
+                    }]
+                })
+                .then(dbUserData => {
+                    //res.json(dbUserData);
 
-                // render all messages on homepage
-                res.render('chat', {
-                    messages, 
-                    user,
-                    loggedIn: req.session.loggedIn,
-                    chatHome: true
+                    const user = dbUserData.map(user => user.get({ plain: true }));
+                    console.log(user);
+
+                    const messages = dbMessageData.map(message => message.get({ plain: true }));
+                    console.log(messages);
+
+                    // render all messages on homepage
+                    res.render('chat', {
+                        messages,
+                        user,
+                        loggedIn: req.session.loggedIn,
+                        chatHome: true
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
                 });
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-            
+
         })
         .catch(err => {
             console.log(err);
@@ -126,17 +126,40 @@ router.get('/chat/:id', (req, res) => {
                 ['created_at', 'DESC']
             ]
         })
-        .then(dbPostData => {
-            //res.json(dbUserData);
+        .then(dbMessageData => {
 
-            const messages = dbPostData.map(message => message.get({ plain: true }));
+            User.findAll({
+                    where: {
+                        id: 1
+                    },
+                    // perform inner join on message table with message table to find all sent and received by one user?
+                    attributes: ['id', 'first_name'],
+                    include: [{
+                        model: Message,
+                        required: true
+                    }]
+                })
+                .then(dbUserData => {
 
-            // render all messages on homepage
-            res.render('chat', {
-                messages,
-                loggedIn: req.session.loggedIn,
-                chatHome: false
-            });
+                    const user = dbUserData.map(user => user.get({ plain: true }));
+                    console.log(user);
+
+                    const messages = dbMessageData.map(message => message.get({ plain: true }));
+                    console.log(messages);
+
+                    // render all messages on specific chat page, pass chatHome as false to signify not main chat page
+                    res.render('chat', {
+                        messages,
+                        user,
+                        loggedIn: req.session.loggedIn,
+                        chatHome: false
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
+                });
+
         })
         .catch(err => {
             console.log(err);
