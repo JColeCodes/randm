@@ -30,9 +30,13 @@
     {{else}}
     <div class="user-info">
       <p class="in-chat">You're in a chat with</p>
-      <h2 class="chatter-name">{{first_name}} {{last_name}}</h2>
-      <p class="chatter-info">{{birthday}}, {{gender}}, {{sexual_preference}}</p>
-      <p class="chatter-bio">{{bio}}</p>
+      {{#each messages}}
+      {{#if @first}}
+      <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
+      <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
+      <p class="chatter-bio">{{user.bio}}</p>
+      {{/if}}
+      {{/each}}
     </div>
   </div>
   <div class="messages">

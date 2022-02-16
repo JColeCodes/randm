@@ -105,7 +105,7 @@ router.get('/chat', (req, res) => {
 router.get('/chat/:id', (req, res) => {
     Message.findAll({
             where: {
-                sender_id: req.session.id,
+                sender_id: 1,
                 receiver_id: req.params.id
             },
             include: [{
