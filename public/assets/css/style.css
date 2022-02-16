@@ -183,7 +183,7 @@ input:focus {
 .current-chat .send-message {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 .current-chat .send-message input {
     flex: 1;
@@ -212,6 +212,7 @@ input:focus {
     display: inline-block;
     align-self: flex-end;
     list-style-type: none;
+    width: 100%;
 }
 .current-chat .messages ol li {
     display: block;
@@ -241,5 +242,5 @@ input:focus {
     color: var(--mid-color);
     text-transform: uppercase;
     font-size: .9em;
-    margin: 5px;
+    margin: 5px 5px 15px;
 }

@@ -1,7 +1,15 @@
 module.exports = {
-    getUserLatest: (messages, user, sessionId) => {
+    getUserLatest: (messages, user, sessionId, paramId) => {
         var currentUser = user.filter(user => user.id === sessionId);
         currentUser = currentUser[0];
+
+        var currentChatter = user.filter(user => user.id == paramId);
+        currentChatter = currentChatter[0];
+        if (!paramId) {
+            var currentChatter = null;
+        }
+
+        console.log(paramId, currentChatter);
 
         const latestChat = [];
         messages.forEach(message => {
@@ -21,6 +29,6 @@ module.exports = {
         //     return;
         // }
 
-        return { currentUser, latestChat };
+        return { currentUser, currentChatter, latestChat };
     }
 }

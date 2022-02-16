@@ -34,20 +34,18 @@
     {{else}}
     <div class="user-info">
       <p class="in-chat">You're in a chat with</p>
-      {{#each messages}}
-      {{#if @first}}
+      {{#with userLatest.currentChatter as |user|}}
       <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
       <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
       <p class="chatter-bio">{{user.bio}}</p>
-      {{/if}}
-      {{/each}}
+      {{/with}}
     </div>
     <div class="messages">
       <ol>
         {{#each messages}}
         <li class="{{get_chat_class sender_id ../userLatest.currentUser.id}}">
           <div class="message">{{message_text}}</div>
-          <p class="sent-time">{{created_at}}</p>
+          <p class="sent-time">{{format_time created_at}}</p>
         </li>
         {{/each}}
       </ol>

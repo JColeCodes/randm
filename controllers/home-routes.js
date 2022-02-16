@@ -130,7 +130,9 @@ router.get('/chat/:id', (req, res) => {
             // display all messages in descending order by date created
             order: [
                 ['id']
-            ]
+            ],
+            // created_at was camelCase (createdAt) without adding attributes like this...
+            attributes: ['id', 'sender_id', 'receiver_id', 'message_text', 'created_at']
         })
         .then(dbMessageData => {
 
@@ -139,7 +141,7 @@ router.get('/chat/:id', (req, res) => {
                 //     id: sessionId
                 // },
                 // perform inner join on message table with message table to find all sent and received by one user?
-                attributes: ['id', 'first_name', 'last_name']
+                attributes: ['id', 'first_name', 'last_name', 'pronouns', 'gender', 'sexual_preference', 'bio']
             })
             .then(dbUserData => {
 
@@ -149,7 +151,7 @@ router.get('/chat/:id', (req, res) => {
                 const messages = dbMessageData.map(message => message.get({ plain: true }));
                 console.log(messages);
 
-                const userLatest = getUserLatest(messages, user, sessionId);
+                const userLatest = getUserLatest(messages, user, sessionId, req.params.id);
                 console.log(userLatest);
 
                 // render all messages on specific chat page, pass chatHome as false to signify not main chat page
