@@ -2,6 +2,17 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { User, Message } = require('../models');
 
+// Redirect homepage to either login page (if not logged in) OR chat page (if logged in)
+router.get('/', (req, res) => {
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+        return;
+    } else {
+        res.redirect('/chat');
+        return;
+    }
+});
+
 // show homepage if user is logged in, else render login.handlebars
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
@@ -12,17 +23,25 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+
 // find all messages received or sent by user, display previews on homepage
-router.get('/', (req, res) => {
+router.get('/chat', (req, res) => {
     Message.findAll({
             where: {
-                receiver_id: req.session.id
+                receiver_id: req.session.id,
+                sender_id: req.session.id
             },
             // perform inner join on message table with message table to find all sent and received by one user?
             include: [{
-                model: Message,
+                model: User,
                 required: true,
-                attributes: ['receiver_id']
+                attributes: ['id'],
+                include: {
+                    model: Message,
+                    required: true,
+                    // include message_text to display and created_at for date formatting
+                    attributes: ['receiver_id', 'sender_id']
+                }
             }]
         })
         .then(dbPostData => {
@@ -31,7 +50,7 @@ router.get('/', (req, res) => {
             const messages = dbPostData.map(message => message.get({ plain: true }));
 
             // render all messages on homepage
-            res.render('homepage', {
+            res.render('chat', {
                 messages,
                 loggedIn: req.session.loggedIn
             });
@@ -43,10 +62,10 @@ router.get('/', (req, res) => {
 });
 
 // find all messages between 2 specific users, use session id for user 1 and params id for user 2
-router.get('/:id', (req, res) => {
+router.get('/chat/:id', (req, res) => {
     Message.findAll({
             where: {
-                user_id: req.session.id,
+                sender_id: req.session.id,
                 receiver_id: req.params.id
             },
             include: [{
@@ -73,7 +92,7 @@ router.get('/:id', (req, res) => {
             const messages = dbPostData.map(message => message.get({ plain: true }));
 
             // render all messages on homepage
-            res.render('homepage', {
+            res.render('chat', {
                 messages,
                 loggedIn: req.session.loggedIn
             });
