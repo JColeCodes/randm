@@ -22,8 +22,9 @@ function displayRecentChat() {
                     recentLink.appendChild(recentLi);
                     recentList.appendChild(recentLink);
                 });
+            } else {
+                recentList.innerHTML = `<li>You currently have no chats.</li>`;
             }
-            recentList.innerHTML = `<li>You currently have no chats.</li>`;
         })
         .catch(response => document.location.reload());
 }
