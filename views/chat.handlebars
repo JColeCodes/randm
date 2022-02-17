@@ -50,8 +50,13 @@
 
       <form class="send-message">
         <input type="text" id="message"/>
-        <button type="submit">Send</button>
+        
+        {{#with userLatest.currentUser}}
+        <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
+        {{/with}}
+        
       </form>
+      <script src="/assets/js/chat.js"></script>
       <script src="/assets/js/scroll.js"></script>
       {{/if}}
     </div>
