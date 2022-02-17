@@ -24,6 +24,7 @@ body {
 }
 
 a, a:hover, button, button:hover, li, li:hover { transition: all 0.5s ease-in-out; }
+button:hover { cursor: pointer; }
 
 a {
     color: var(--main-color);
@@ -62,7 +63,7 @@ input:focus {
     padding: 20px;
     font-size: 1.2em;
 }
-.unlogged-page .forms input {
+.unlogged-page .forms input, .unlogged-page .forms select, .unlogged-page .forms textarea {
     padding: 10px;
     margin: 5px 0 15px;
     width: 100%;
@@ -70,6 +71,14 @@ input:focus {
     background-color: white;
     border: 1px solid var(--sidebar-highlight-color);
     color: var(--darkest-color);
+    font-family: 'Lato', sans-serif;
+}
+.unlogged-page .forms textarea {
+    height: 120px;
+}
+.unlogged-page .forms input:focus, .unlogged-page .forms select:focus, .unlogged-page .forms textarea:focus {
+    outline: 1px solid var(--secondary-lighter);
+    border: 1px solid white;
 }
 .unlogged-page .forms button {
     padding: 10px;
@@ -110,6 +119,39 @@ input:focus {
 }
 .logged-in header .welcome-info i {
     font-size: 1.5em;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+.logged-in header .welcome-info .user-options {
+    z-index: -1;
+    position: absolute;
+    background-color: white;
+    border: 1px solid var(--sidebar-highlight-color);
+    box-shadow: 0 0 1px var(--darkest-color);
+    padding: 10px;
+    right: 20px;
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+}
+.logged-in header .welcome-info:hover .user-options {
+    z-index: 100;
+    opacity: 1;
+    transition: all 0.1s ease-in-out;
+}
+.logged-in header .welcome-info .user-options ul {
+    list-style-type: none;
+    margin: 0;
+}
+.logged-in header .welcome-info .user-options ul button {
+    padding: 5px 15px;
+    border: none;
+    background-color: transparent;
+    color: var(--darkest-color);
+    font-size: 1em;
+    text-align: center;
+}
+.logged-in header .welcome-info .user-options ul button:hover {
+    color: var(--secondary-color);
 }
 /* Main Content */
 .logged-in main {
@@ -267,4 +309,30 @@ input:focus {
     text-transform: uppercase;
     font-size: .9em;
     margin: 5px 5px 15px;
+}
+
+/* EXTRA */
+/* Highlight selection */
+::-moz-selection { /* Code for Firefox */
+    color: var(--lightest-color);
+    background: var(--secondary-lighter);
+}
+::selection {
+    color: var(--lightest-color);
+    background: var(--secondary-lighter);
+}
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background: #F6F9F9; 
+}
+::-webkit-scrollbar-thumb {
+    background: #E0E9E9; 
+    border-radius: 7px;
+    border: 2px solid #F6F9F9;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #AFB5B6;
 }
