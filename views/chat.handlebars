@@ -5,9 +5,14 @@
       </div>
       <div class="welcome-info">
         {{#with userLatest.currentUser}}
-          Hello, {{first_name}}! 
-          <i class="fa-solid fa-circle-user"></i>
-          {{/with}}
+        Hello, {{first_name}}! 
+        <i class="fa-solid fa-circle-user"></i>
+        {{/with}}
+        <div class="user-options">
+          <ul>
+            <li><button id="logout-btn">Logout</button></li>
+          </ul>
+        </div>
       </div>
   </header>
 
@@ -45,10 +50,17 @@
 
       <form class="send-message">
         <input type="text" id="message"/>
-        <button type="submit">Send</button>
+        
+        {{#with userLatest.currentUser}}
+        <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
+        {{/with}}
+        
       </form>
+      <script src="/assets/js/chat.js"></script>
       <script src="/assets/js/scroll.js"></script>
       {{/if}}
     </div>
   </main>
 </div>
+
+<script src="/assets/js/logout.js"></script>
