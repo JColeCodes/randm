@@ -14,8 +14,8 @@ async function signupFormHandler(event) {
   const bio = document.querySelector('#bio').value.trim();
 
   const birthday = new Date(dob).toISOString().slice(0, 10);
-  console.log(birthday);
-  console.log(typeof birthday);
+  // console.log(birthday);
+  // console.log(typeofbirthday);
 
   const dobDate = Date.parse(dob);
 

@@ -56,7 +56,7 @@ User.init(
       allowNull: true,
     },
     birthday: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   },
