@@ -13,16 +13,20 @@ async function signupFormHandler(event) {
   const dob = document.querySelector('#birthday-register').value.trim();
   const bio = document.querySelector('#bio').value.trim();
 
-  const birthday = Date.parse(dob);
+  const birthday = new Date(dob).toISOString().slice(0, 10);
+  console.log(birthday);
+  console.log(typeof birthday);
 
-  function calculate_age(dob) {
-    const diff_ms = Date.now() - dob;
+  const dobDate = Date.parse(dob);
+
+  function calculate_age(date) {
+    const diff_ms = Date.now() - date;
     const age_dt = new Date(diff_ms);
 
     return Math.abs(age_dt.getUTCFullYear() - 1970);
   }
 
-  const age = calculate_age(dob);
+  const age = calculate_age(dobDate);
 
   if (age < 18) {
     alert('Not of age!');
