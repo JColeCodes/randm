@@ -26,18 +26,18 @@ async function checkCurrentMessages(newUserId) {
 
             potentialUsers = [];
 
-            data.forEach(element => {
-                // iterate through data in recent to make sure user isn't already chatting
+            // iterate through data in recent to make sure user isn't already chatting
+            data.forEach(user => {
+
                 // if not, push those numbers to potentialUsers array
                 // randomly pull number from potentialUsers array
                 // assign to newRandomId variable
                 // pass that to randomMessageHandler as the recevier_id for a new message from current user
-
-                randomMessageHandler(newRandomId);
+                return newRandomId;
             });
 
         })
-        .catch(response => document.location.reload());
+        .then(randomMessageHandler(newRandomId));
 }
 
 async function randomMessageHandler(newRandomId) {
