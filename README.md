@@ -3,33 +3,33 @@
  For this project, we want to create a randomize dating app, for random singles to meet other random singles by just clicking RANDM. We want users to have a fun experience dating and for users to create a bond through messaging and not by the looks.
 
 
->User Story
+## User Story
 
 >AS A person who has trouble finding dating matches
+>
+>I WANT to use a Dating App that randomly matches users
+>
+>SO THAT when I click on the RANDM button, a new page opens with a random user. 
 
->I WANT to use a Dating App that randomly matches users.
-
->SO THAT when I Click on RANDM button, a new screen pop up with a random user. 
-
->WHEN I Click on the App
-
->THEN I am presented with the Title of the App, the Register or Login form.
-
->WHEN I Click on Register
-
->THEN I'm presented with inputting my first name, last name, email, password, bio, gender, sexual preferences and birthday
-
->WHEN I Click on Login
-
->I'm presented with entering my Username and Password
-
->WHEN I Click Randm
-
->I'm presented with a new open chat with a Random user.
-
->WHEN I Click on Logout
-
->I'm presented with the homepage screen
+>WHEN I open the app
+>
+>THEN I am presented with the title of the app and the login form.
+>
+>WHEN I choose to register
+>
+>THEN I'm presented with inputting my first name, last name, email, password, gender identity, sexual preferences, pronouns, birthday, and bio.
+>
+>WHEN I click on Login
+>
+>I'm presented with entering my email and password.
+>
+>WHEN I click the randomize a new chat button
+>
+>I'm presented with a new open chat with a random user.
+>
+>WHEN I click on logout
+>
+>I'm presented with the homepage screen.
 
 
 ## Tools
