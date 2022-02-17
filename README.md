@@ -4,21 +4,32 @@
 
 
 >User Story
-AS A person who has trouble finding dating matches
-I WANT to use a Dating App that randomly matches users.
-SO THAT when I Click on RANDM button, a new screen pop up with a random user. 
 
+>AS A person who has trouble finding dating matches
+
+>I WANT to use a Dating App that randomly matches users.
+
+>SO THAT when I Click on RANDM button, a new screen pop up with a random user. 
 
 >WHEN I Click on the App
-THEN I am presented with the Title of the App, the Register or Login form.
-WHEN I Click on Register
-I'm presented with inputting my first name, last name, email, password, bio, gender, sexual preferences and birthday
-WHEN I Click on Login
-I'm presented with entering my Username and Password
-WHEN I Click Randm
-I'm presented with a new open chat with a Random user.
-WHEN I Click on Logout
-I'm presented with the homepage screen
+
+>THEN I am presented with the Title of the App, the Register or Login form.
+
+>WHEN I Click on Register
+
+>THEN I'm presented with inputting my first name, last name, email, password, bio, gender, sexual preferences and birthday
+
+>WHEN I Click on Login
+
+>I'm presented with entering my Username and Password
+
+>WHEN I Click Randm
+
+>I'm presented with a new open chat with a Random user.
+
+>WHEN I Click on Logout
+
+>I'm presented with the homepage screen
 
 
 ## Tools
