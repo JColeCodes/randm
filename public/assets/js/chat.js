@@ -1,4 +1,4 @@
-function getRandomUserId() {
+async function getRandomUserId() {
     const currentUserId = parseInt(document.getElementById('userId').value);
 
     // get all users length as maximum
@@ -14,64 +14,51 @@ function getRandomUserId() {
 
             console.log(filteredUsers[randomUserId]);
             const newUserId = filteredUsers[randomUserId];
-            return newUserId;
+            checkCurrentMessages(newUserId);
         });
 }
 
-function getNewChatId() {
-    // get all users length as maximum
-    fetch('/api/chat')
-        .then((res) => {
-            return res.json();
-        })
-        .then((totalChats) => {
-            const newChatId = totalChats + 1;
-
-            return newChatId;
-        });
-}
-
-function randomMessageHandler(newUserId, newChatId) {
+// use the new user id to check if current user is already chatting with them
+async function checkCurrentMessages(newUserId) {
     fetch('/api/messages/recent', { method: 'GET' })
         .then(response => response.json())
         .then(data => {
 
+            potentialUsers = [];
+
             data.forEach(element => {
-                let recentLi = document.createElement("li");
-                let recentLink = document.createElement('a');
-                recentLink.setAttribute('href', `/chat/${element.id}`);
+                // iterate through data in recent to make sure user isn't already chatting
+                // if not, push those numbers to potentialUsers array
+                // randomly pull number from potentialUsers array
+                // assign to newRandomId variable
+                // pass that to randomMessageHandler as the recevier_id for a new message from current user
 
-                if (element.id == pageUrl[pageUrl.length - 1]) {
-                    recentLi.className = "selected";
-                }
-
-                recentLink.appendChild(recentLi);
-                recentList.appendChild(recentLink);
+                randomMessageHandler(newRandomId);
             });
+
         })
         .catch(response => document.location.reload());
-
-    //console.log(totalUsers);
-
-    // use maximum to generate random number, start at 1
-
-    // get user id from data-user attribute in send message button
-    //   const userId = document
-    //     .querySelector('#send-message-btn')
-    //     .getAttribute('data-user');
-
-    //   // check that the random id doesn't match the user id
-    //   // TO DO: also check that the id isn't someone you are already in a chat with
-    //   if (randomUserId !== userId) {
-    //     // TO DO: generate new chat page using the randomUserId
-    //     // TO DO: get all existing chat IDs and generate a new one with this new user
-    //     // LOAD page of chat/:id (using the new chat id)
-    //   } else {
-    //     // run the function again to generate new number that doesn't match the user's ID
-    //     randomMessageHandler();
-    //   }
 }
 
+async function randomMessageHandler(newRandomId) {
+
+    const message_text = 'Hi, let\'s start a new random chat together';
+    const sender_id = parseInt(document.getElementById('userId').value);
+    const receiver_id = newRandomId;
+
+    const response = await fetch('/api/messages', {
+        method: 'post',
+        body: JSON.stringify({
+            sender_id,
+            receiver_id,
+            message_text,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+}
+
+// Send message button on form submit
 async function sendMessageFormHandler(event) {
     event.preventDefault();
 
@@ -113,4 +100,4 @@ document
 
 document
     .getElementById('randomBtn')
-    .addEventListener('click', randomMessageHandler);
+    .addEventListener('click', getRandomUserId);
