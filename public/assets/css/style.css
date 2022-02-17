@@ -33,7 +33,7 @@ a:hover {
     color: var(--secondary-color);
 }
 input:focus {
-    outline: 2px solid var(--secondary-lighter);
+    outline: 0;
 }
 
 /* IF NOT LOGGED IN */
@@ -134,6 +134,11 @@ input:focus {
 .recent-chat ul li h3.name {
     color: var(--main-color);
     font-size: 1.3em;
+    transition: all 0.5s ease-in-out;
+}
+.recent-chat ul li:hover h3.name {
+    color: var(--secondary-color);
+    transition: all 0.5s ease-in-out;
 }
 .recent-chat ul li span.latest-message {
     color: var(--darkest-color);
@@ -151,6 +156,23 @@ input:focus {
     justify-content: space-between;
     flex-flow: column;
     height: 100%;
+}
+/* Chat Home */
+.current-chat .chat-home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.current-chat .chat-home button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: 0;
+    padding: 15px;
+    margin: 10px auto;
+    font-weight: bold;
+    font-size: 1.1em;
 }
 /* About the chatter at top */
 .current-chat .user-info {
@@ -183,7 +205,7 @@ input:focus {
 .current-chat .send-message {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 .current-chat .send-message input {
     flex: 1;
@@ -203,15 +225,18 @@ input:focus {
 }
 /* Chat box in middle */
 .current-chat .messages {
-    flex: 1;
+    flex: 1 1 1px;
     padding: 0 10px;
     display: flex;
-    height: 100%;
+    overflow: auto;
 }
 .current-chat .messages ol {
     display: inline-block;
-    align-self: flex-end;
     list-style-type: none;
+    width: 100%;
+}
+.current-chat .messages ol.short {
+    align-self: flex-end;
 }
 .current-chat .messages ol li {
     display: block;
@@ -241,5 +266,5 @@ input:focus {
     color: var(--mid-color);
     text-transform: uppercase;
     font-size: .9em;
-    margin: 5px;
+    margin: 5px 5px 15px;
 }

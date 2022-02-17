@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const { User, Message } = require('../../models');
 const { Op } = require('sequelize');
+const { getUserLatest } = require('../../utils/filters');
+
+const sessionId = 2;
 
 // GET ROUTE
 
@@ -75,6 +78,62 @@ router.get('/recent', (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
+});
+
+router.get('/recent', (req, res) => {
+    Message.findAll({
+            where: {
+                [Op.or]: [
+                    { receiver_id: sessionId },
+                    { sender_id: sessionId }
+                ]
+            },
+            // perform inner join on message table with message table to find all sent and received by one user?
+            include: [{
+                model: User,
+                required: true,
+                attributes: ['id', 'first_name', 'last_name'],
+                include: {
+                    model: Message,
+                    required: true,
+                    // include message_text to display and created_at for date formatting
+                    attributes: ['receiver_id', 'sender_id']
+                }
+            }]
+        })
+        .then(dbMessageData => {
+            User.findAll({
+                attributes: ['id', 'first_name', 'last_name']
+            })
+            .then(dbUserData => {
+                //res.json(dbUserData);
+    
+                const user = dbUserData.map(user => user.get({ plain: true }));
+                console.log(user);
+    
+                const messages = dbMessageData.map(message => message.get({ plain: true }));
+                console.log(messages);
+
+                const userLatest = getUserLatest(messages, user, sessionId);
+
+                // render all messages on homepage
+                res.render('chat', {
+                    userLatest,
+                    loggedIn: req.session.loggedIn,
+                    chatHome: true
+                });
+                res.json(userLatest.latestChat);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+            
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 // POST ROUTE
