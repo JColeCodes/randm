@@ -5,9 +5,14 @@
       </div>
       <div class="welcome-info">
         {{#with userLatest.currentUser}}
-          Hello, {{first_name}}! 
-          <i class="fa-solid fa-circle-user"></i>
-          {{/with}}
+        Hello, {{first_name}}! 
+        <i class="fa-solid fa-circle-user"></i>
+        {{/with}}
+        <div class="user-options">
+          <ul>
+            <li><button id="logout-btn">Logout</button></li>
+          </ul>
+        </div>
       </div>
   </header>
 
@@ -52,3 +57,5 @@
     </div>
   </main>
 </div>
+
+<script src="/assets/js/logout.js"></script>
