@@ -1,17 +1,24 @@
 async function randomMessageHandler() {
 
     // get all users length as maximum
-
     const totalUsers = await fetch('/api/users');
     totalUsers = totalUsers.length;
 
-    const randomUserId = Math.floor(Math.random() * totalUsers);
+    // use maximum to generate random number, start at 1
+    const randomUserId = Math.floor((Math.random() * totalUsers) + 1);
+
     // get user id from data-user attribute in send message button
     const userId = document.querySelector('#send-message-btn').getAttribute('data-user');
 
     // check that the random id doesn't match the user id
+    // TO DO: also check that the id isn't someone you are already in a chat with
     if (randomUserId !== userId) {
-        const response = await fetch('/api/users/' + totalUsers);
+        // TO DO: generate new chat page using the randomUserId
+        // TO DO: get all existing chat IDs and generate a new one with this new user
+        // LOAD page of chat/:id (using the new chat id)
+    } else {
+        // run the function again to generate new number that doesn't match the user's ID
+        randomMessageHandler();
     }
 
 }
