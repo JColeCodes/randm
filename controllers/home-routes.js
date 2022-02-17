@@ -4,7 +4,7 @@ const { User, Message } = require('../models');
 const { Op } = require('sequelize');
 const { getUserLatest } = require('../utils/filters');
 
-const sessionId = 2;
+//const sessionId = 2;
 
 // Redirect homepage to either login page (if not logged in) OR chat page (if logged in)
 router.get('/', (req, res) => {
@@ -37,9 +37,14 @@ router.get('/register', (req, res) => {
     res.render('register');
 });
 
-
+var sessionId;
 // // find all messages received or sent by user, display previews on homepage
 router.get('/chat', (req, res) => {
+    sessionId = req.session.user_id;
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+        return;
+    }
     Message.findAll({
             where: {
                 [Op.or]: [
@@ -79,7 +84,9 @@ router.get('/chat', (req, res) => {
                 const messages = dbMessageData.map(message => message.get({ plain: true }));
                 console.log(messages);
 
+                console.log('HELLO!', req.session.user_id);
                 const userLatest = getUserLatest(messages, user, sessionId);
+                console.log(userLatest.currentUser);
 
                 // render all messages on homepage
                 res.render('chat', {
@@ -103,8 +110,13 @@ router.get('/chat', (req, res) => {
 
 // find all messages between 2 specific users, use session id for user 1 and params id for user 2
 router.get('/chat/:id', (req, res) => {
+    sessionId = req.session.user_id;
     if (req.params.id == sessionId) {
         res.redirect('/chat');
+        return;
+    }
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
         return;
     }
     Message.findAll({
