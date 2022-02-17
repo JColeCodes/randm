@@ -33,6 +33,7 @@ I'm presented with the homepage screen
 * Sequelize
 
 ## A Demon on how the page would look like.
+![random](https://user-images.githubusercontent.com/37889335/154541667-3a7d1aba-adac-4850-a8a2-6e5548712a2a.PNG)
 
 
 ### Created by: Jennifer Cole, Lex Slovik, Charlie Hua, Chuong Vo, Marielle Champagne, Ahmad Anees, Gavin Jacobsen, Rex Oliver.
