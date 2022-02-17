@@ -69,8 +69,11 @@
     {{/if}}
   </div>
 
-  <form class="send-message">
-    <input type="text" id="message"/>
-    <button type="submit">Send</button>
-  </form>
-</main>
+<form class="send-message">
+  <input type="text" id="message"/>
+  {{#each user}}
+  <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
+  {{/each}}
+</form>
+
+<script src="/assets/javascript/chat.js"></script>
