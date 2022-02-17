@@ -5,6 +5,7 @@
       </div>
       <div class="welcome-info">
         {{#each user}}
+        <input type="hidden" id="userId" value='{{id}}'>
           Hello, {{first_name}}! 
           <i class="fa-solid fa-circle-user"></i>
           {{/each}}
@@ -29,7 +30,7 @@
     {{#if chatHome}}
     <div class="chat-home">
       This is the chat's homepage!
-      <button>Randomize a new chat</button>
+      <button id="randomBtn">Randomize a new chat</button>
     </div>
     {{else}}
     <div class="user-info">
