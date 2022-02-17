@@ -1,6 +1,6 @@
 # RANDM - The Randomize Dating App!
 
-## For this project, we want to create a randomize dating app, for random singles to meet other random singles by just clicking RANDM. We want users to have a fun experience dating and for users to create a bond through messaging and not by the looks.
+### For this project, we want to create a randomize dating app, for random singles to meet other random singles by just clicking RANDM. We want users to have a fun experience dating and for users to create a bond through messaging and not by the looks.
 ```
 User Story
 AS A Manager at a Start Up Company
