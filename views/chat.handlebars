@@ -1,0 +1,81 @@
+<div class="logged-in">
+  <header>
+    <div class="logo">
+        <img src="/assets/images/logo-light.svg" alt="randm logo" />
+      </div>
+      <div class="welcome-info">
+        {{#each user}}
+        <input type="hidden" id="userId" value='{{id}}'>
+          Hello, {{first_name}}! 
+          <i class="fa-solid fa-circle-user"></i>
+          {{/each}}
+      </div>
+  </header>
+
+<main>
+  <div class="recent-chat">
+      <ul>
+        {{#each messages}}
+        <li>
+          <h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
+          <span class="latest-message">
+            {{#if @last}}{{message_text}}{{/if}}
+            </span>
+        </li>
+        {{/each}}
+      </ul>
+  </div>
+
+<div class="current-chat">
+    {{#if chatHome}}
+    <div class="chat-home">
+      This is the chat's homepage!
+      <button id="randomBtn">Randomize a new chat</button>
+    </div>
+    {{else}}
+    <div class="user-info">
+      <p class="in-chat">You're in a chat with</p>
+      {{#each messages}}
+      {{#if @first}}
+      <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
+      <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
+      <p class="chatter-bio">{{user.bio}}</p>
+      {{/if}}
+      {{/each}}
+    </div>
+    <div class="messages">
+      <ol>
+        <li class="received">
+          <div class="message"></div>
+          <p class="sent-time"></p>
+        </li>
+        <li class="received">
+          <div class="message"></div>
+          <p class="sent-time"></p>
+        </li>
+        <li class="sent">
+          <div class="message"></div>
+          <p class="sent-time"></p>
+        </li>
+        <li class="received">
+          <div class="message"></div>
+          <p class="sent-time"></p>
+        </li>
+        <li class="sent">
+          <div class="message"></div>
+          <p class="sent-time"></p>
+        </li>
+      </ol>
+    </div>
+    {{/if}}
+  </div>
+
+<form class="send-message">
+  <input type="text" id="message"/>
+  {{#each user}}
+  <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
+  {{/each}}
+</form>
+
+<script src="/assets/javascript/chat.js"></script>
+<script src="/assets/javascript/logout.js"></script>
