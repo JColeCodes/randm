@@ -1,7 +1,7 @@
 <div class="logged-in">
   <header>
     <div class="logo">
-        <img src="/assets/images/logo-light.svg" alt="randm logo" />
+        <a href="/chat"><img src="/assets/images/logo-light.svg" alt="randm logo" /></a>
       </div>
       <div class="welcome-info">
         {{#with userLatest.currentUser}}
@@ -11,50 +11,44 @@
       </div>
   </header>
 
-<main>
-  <div class="recent-chat">
-      <ul>
-        {{#each userLatest.latestChat}}
-        <li>
-          <h3 class="name">{{first_name}} {{last_name}}</h3>
-          <span class="latest-message">
-            {{latestMessage}}
-            </span>
-        </li>
-        {{/each}}
-      </ul>
-  </div>
+  <main>
+    <div class="recent-chat">
+        <ul id="recent-list">
+        </ul>
+    </div>
+    <script src="/assets/js/recent.js"></script>
 
-  <div class="current-chat">
-    {{#if chatHome}}
-    <div class="chat-home">
-      This is the chat's homepage!
-      <button>Randomize a new chat</button>
-    </div>
-    {{else}}
-    <div class="user-info">
-      <p class="in-chat">You're in a chat with</p>
-      {{#with userLatest.currentChatter as |user|}}
-      <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
-      <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
-      <p class="chatter-bio">{{user.bio}}</p>
-      {{/with}}
-    </div>
-    <div class="messages">
-      <ol>
-        {{#each messages}}
-        <li class="{{get_chat_class sender_id ../userLatest.currentUser.id}}">
-          <div class="message">{{message_text}}</div>
-          <p class="sent-time">{{format_time created_at}}</p>
-        </li>
-        {{/each}}
-      </ol>
-    </div>
+    <div class="current-chat">
+      {{#if chatHome}}
+      <div class="chat-home">
+        This is the chat's homepage!
+        <button>Randomize a new chat</button>
+      </div>
+      {{else}}
+      <div class="user-info">
+        <p class="in-chat">You're in a chat with</p>
+        {{#with userLatest.currentChatter as |user|}}
+        <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
+        <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
+        <p class="chatter-bio">{{user.bio}}</p>
+        {{/with}}
+      </div>
+      <div class="messages">
+        <ol>
+          {{#each messages}}
+          <li class="{{get_chat_class sender_id ../userLatest.currentUser.id}}">
+            <div class="message">{{message_text}}</div>
+            <p class="sent-time">{{format_time created_at}}</p>
+          </li>
+          {{/each}}
+        </ol>
+      </div>
 
-  <form class="send-message">
-    <input type="text" id="message"/>
-    <button type="submit">Send</button>
-  </form>
-    {{/if}}
-  </div>
-</main>
+    <form class="send-message">
+      <input type="text" id="message"/>
+      <button type="submit">Send</button>
+    </form>
+      {{/if}}
+    </div>
+  </main>
+</div>
