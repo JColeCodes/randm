@@ -8,34 +8,35 @@ const sessionId = 2;
 
 // Redirect homepage to either login page (if not logged in) OR chat page (if logged in)
 router.get('/', (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect('/login');
-    return;
-  } else {
-    res.redirect('/chat');
-    return;
-  }
+    if (!req.session.loggedIn) {
+        res.redirect('/login');
+        return;
+    } else {
+        res.redirect('/chat');
+        return;
+    }
 });
 
 // show homepage if user is logged in, else render login.handlebars
 router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/chat');
-    return;
-  }
+    if (req.session.loggedIn) {
+        res.redirect('/chat');
+        return;
+    }
 
-  res.render('login');
+    res.render('login');
 });
 
 // show register page if user is logged out
 router.get('/register', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/chat');
-    return;
-  }
+    if (req.session.loggedIn) {
+        res.redirect('/chat');
+        return;
+    }
 
-  res.render('register');
+    res.render('register');
 });
+
 
 // // find all messages received or sent by user, display previews on homepage
 router.get('/chat', (req, res) => {
@@ -93,16 +94,12 @@ router.get('/chat', (req, res) => {
             });
             
         })
-        .catch((err) => {
-          console.log(err);
-          res.status(500).json(err);
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
         });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
 });
+
 
 // find all messages between 2 specific users, use session id for user 1 and params id for user 2
 router.get('/chat/:id', (req, res) => {
@@ -175,11 +172,6 @@ router.get('/chat/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
 });
 
 module.exports = router;
