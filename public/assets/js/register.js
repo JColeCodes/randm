@@ -14,8 +14,6 @@ async function signupFormHandler(event) {
     const bio = document.querySelector('#bio').value.trim();
 
     const birthday = new Date(dob).toISOString().slice(0, 10);
-    // console.log(birthday);
-    // console.log(typeofbirthday);
 
     const dobDate = Date.parse(dob);
 
@@ -32,39 +30,44 @@ async function signupFormHandler(event) {
         alert('Not of age!');
     } else if (first_name && last_name && email && password && age > 18) {
         const response = await fetch('/api/users', {
-                method: 'post',
-                body: JSON.stringify({
-                    first_name,
-                    last_name,
-                    email,
-                    password,
-                    bio,
-                    gender,
-                    sexual_preference,
-                    pronouns,
-                    birthday,
-                }),
-                headers: { 'Content-Type': 'application/json' },
-            })
-            .then(response => {
-                fetch('/api/users/login', {
-                    method: 'post',
-                    body: JSON.stringify({
-                        email: response.email,
-                        password: response.password,
-                    }),
-                    headers: { 'Content-Type': 'application/json' },
-                });
-            })
-            .then(document.location.replace('/chat'));
+            method: 'post',
+            body: JSON.stringify({
+                first_name,
+                last_name,
+                email,
+                password,
+                bio,
+                gender,
+                sexual_preference,
+                pronouns,
+                birthday,
+            }),
+            headers: { 'Content-Type': 'application/json' },
+        });
 
+        if (response.ok) {
+            logUserIn(email, password);
+        } else {
+            alert(response.statusText);
+        }
+    }
+}
 
-        // if (response.ok) {
-        //     localStorage.setItem('alert', '# 2 Routed to home page from register');
-        //     document.location.replace('/chat');
-        // } else {
-        //     alert(response.statusText);
-        // }
+async function logUserIn(email, password) {
+
+    const response = await fetch('/api/users/login', {
+        method: 'post',
+        body: JSON.stringify({
+            email,
+            password,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+        document.location.replace('/chat');
+    } else {
+        alert(response.statusText);
     }
 }
 
