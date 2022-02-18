@@ -1,9 +1,9 @@
 function getRandomUserId() {
 
-    console.log('-----------------random button clicked-------------------------');
-    // console.log(event.target);
-    // const currentUserId = parseInt(document.getElementById('userId').value);
-    // console.log(currentUserId);
+    console.log('random button clicked');
+    const currentUserId = parseInt(document.getElementById('userId').value);
+    console.log(currentUserId);
+
     // // get all users length as maximum
     // fetch('/api/users')
     //     .then((res) => {
