@@ -69,37 +69,37 @@ router.get('/chat', (req, res) => {
             //res.json(dbUserData);
 
             User.findAll({
-                // where: {
-                //     id: sessionId
-                // },
-                // perform inner join on message table with message table to find all sent and received by one user?
-                attributes: ['id', 'first_name', 'last_name']
-            })
-            .then(dbUserData => {
-                //res.json(dbUserData);
-    
-                const user = dbUserData.map(user => user.get({ plain: true }));
-                console.log(user);
-    
-                const messages = dbMessageData.map(message => message.get({ plain: true }));
-                console.log(messages);
+                    // where: {
+                    //     id: sessionId
+                    // },
+                    // perform inner join on message table with message table to find all sent and received by one user?
+                    attributes: ['id', 'first_name', 'last_name']
+                })
+                .then(dbUserData => {
+                    //res.json(dbUserData);
 
-                console.log('HELLO!', req.session.user_id);
-                const userLatest = getUserLatest(messages, user, sessionId);
-                console.log(userLatest.currentUser);
+                    const user = dbUserData.map(user => user.get({ plain: true }));
+                    console.log(user);
 
-                // render all messages on homepage
-                res.render('chat', {
-                    userLatest,
-                    loggedIn: req.session.loggedIn,
-                    chatHome: true
+                    const messages = dbMessageData.map(message => message.get({ plain: true }));
+                    console.log(messages);
+
+                    console.log('HELLO!', req.session.user_id);
+                    const userLatest = getUserLatest(messages, user, sessionId);
+                    console.log(userLatest.currentUser);
+
+                    // render all messages on homepage
+                    res.render('chat', {
+                        userLatest,
+                        loggedIn: req.session.loggedIn,
+                        chatHome: true
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
                 });
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-            
+
         })
         .catch(err => {
             console.log(err);
@@ -117,6 +117,11 @@ router.get('/chat/:id', (req, res) => {
     }
     if (!req.session.loggedIn) {
         res.redirect('/login');
+        return;
+    }
+    // if user is chatting with everyone, reroute undefined to chat home
+    if (req.params.id == 'undefined') {
+        res.redirect('/chat');
         return;
     }
     Message.findAll({
@@ -149,35 +154,35 @@ router.get('/chat/:id', (req, res) => {
         .then(dbMessageData => {
 
             User.findAll({
-                // where: {
-                //     id: sessionId
-                // },
-                // perform inner join on message table with message table to find all sent and received by one user?
-                attributes: ['id', 'first_name', 'last_name', 'pronouns', 'gender', 'sexual_preference', 'bio']
-            })
-            .then(dbUserData => {
+                    // where: {
+                    //     id: sessionId
+                    // },
+                    // perform inner join on message table with message table to find all sent and received by one user?
+                    attributes: ['id', 'first_name', 'last_name', 'pronouns', 'gender', 'sexual_preference', 'bio']
+                })
+                .then(dbUserData => {
 
-                const user = dbUserData.map(user => user.get({ plain: true }));
-                console.log(user);
+                    const user = dbUserData.map(user => user.get({ plain: true }));
+                    console.log(user);
 
-                const messages = dbMessageData.map(message => message.get({ plain: true }));
-                console.log(messages);
+                    const messages = dbMessageData.map(message => message.get({ plain: true }));
+                    console.log(messages);
 
-                const userLatest = getUserLatest(messages, user, sessionId, req.params.id);
-                console.log(userLatest);
+                    const userLatest = getUserLatest(messages, user, sessionId, req.params.id);
+                    console.log(userLatest);
 
-                // render all messages on specific chat page, pass chatHome as false to signify not main chat page
-                res.render('chat', {
-                    messages,
-                    userLatest,
-                    loggedIn: req.session.loggedIn,
-                    chatHome: false
+                    // render all messages on specific chat page, pass chatHome as false to signify not main chat page
+                    res.render('chat', {
+                        messages,
+                        userLatest,
+                        loggedIn: req.session.loggedIn,
+                        chatHome: false
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json(err);
                 });
-            })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
 
         })
         .catch(err => {
