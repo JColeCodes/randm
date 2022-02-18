@@ -1,66 +1,60 @@
-function getRandomUserId() {
+async function getOtherUserId() {
 
-    console.log('random button clicked');
-    const currentUserId = parseInt(document.getElementById('userId').value);
-    console.log(currentUserId);
+    const currentUserId = parseInt(document
+        .querySelector('#random-btn')
+        .getAttribute('data-user'));
+    console.log('currentUserId: ' + currentUserId);
 
-    // // get all users length as maximum
-    // fetch('/api/users')
-    //     .then((res) => {
-    //         return res.json();
-    //     })
-    //     .then((totalUsers) => {
-    //         const randomUserId = Math.floor(Math.random() * totalUsers.length);
-    //         const filteredUsers = totalUsers.filter(
-    //             (users) => users.id !== currentUserId
-    //         );
-    //         console.log('--------------------FROM getRandomUserId----------------------');
-    //         console.log('Filtered users random id: ' + filteredUsers[randomUserId]);
-    //         const newUserId = filteredUsers[randomUserId];
-    //         return newUserId;
-    //     })
-    //     .then(checkCurrentMessages(newUserId));
+    // get all users length as maximum
+    fetch('/api/users')
+        .then((res) => {
+            return res.json();
+        })
+        .then((totalUsers) => {
+            console.log('Total users: ' + totalUsers.length);
+
+            const usersArray = [];
+
+            totalUsers.forEach((user) => {
+                if (user.id !== currentUserId) {
+                    usersArray.push(user.id);
+                }
+            });
+            console.log('usersArray: ' + usersArray);
+
+            checkCurrentMessages(usersArray);
+        })
+        // .then(checkCurrentMessages(randomUserId));
 }
 
 // use the new user id to check if current user is already chatting with them
-async function checkCurrentMessages(newUserId) {
+async function checkCurrentMessages(usersArray) {
+
     fetch('/api/messages/recent', { method: 'GET' })
         .then(response => response.json())
         .then(data => {
 
-            potentialUsers = [];
-            console.log('--------------------FROM checkCurrentMessages----------------------');
-
             // iterate through data in recent to make sure user isn't already chatting
             data.forEach(user => {
-                console.log(user);
-                // if not, push those numbers to potentialUsers array
-                // randomly pull number from potentialUsers array
-                // assign to newRandomId variable
-                // pass that to randomMessageHandler as the recevier_id for a new message from current user
-                //return newRandomId;
+
+                if (usersArray.includes(user.id)) {
+                    usersArray.splice(usersArray.indexOf(user.id), 1)
+                }
+                console.log(usersArray);
+
+                // random number from total users, minus 1 for self and plus 1 to exclude 0
+                console.log(usersArray.length);
+                const randomUserId = (Math.floor(Math.random() * usersArray.length));
+                console.log('randomUserId: ' + usersArray[randomUserId]);
+
+
+                document.location.replace(`/chat/${usersArray[randomUserId]}`);
             });
 
         })
-        .then(randomMessageHandler(newRandomId));
-}
-
-async function randomMessageHandler(newRandomId) {
-
-    const message_text = 'Hi, let\'s start a new random chat together';
-    const sender_id = parseInt(document.getElementById('userId').value);
-    const receiver_id = newRandomId;
-
-    const response = await fetch('/api/messages', {
-        method: 'post',
-        body: JSON.stringify({
-            sender_id,
-            receiver_id,
-            message_text,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-    });
-
+        // .then(randomUserId => {
+        //     document.location.replace(`/chat/${usersArray[randomUserId]}`);
+        // });
 }
 
 // async function sendMessageFormHandler(event) {
@@ -96,4 +90,4 @@ async function randomMessageHandler(newRandomId) {
 
 document
     .getElementById('random-btn')
-    .addEventListener('click', getRandomUserId);
+    .addEventListener('click', getOtherUserId);
