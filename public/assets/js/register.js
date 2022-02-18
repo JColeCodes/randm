@@ -32,26 +32,39 @@ async function signupFormHandler(event) {
         alert('Not of age!');
     } else if (first_name && last_name && email && password && age > 18) {
         const response = await fetch('/api/users', {
-            method: 'post',
-            body: JSON.stringify({
-                first_name,
-                last_name,
-                email,
-                password,
-                bio,
-                gender,
-                sexual_preference,
-                pronouns,
-                birthday,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        });
+                method: 'post',
+                body: JSON.stringify({
+                    first_name,
+                    last_name,
+                    email,
+                    password,
+                    bio,
+                    gender,
+                    sexual_preference,
+                    pronouns,
+                    birthday,
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => {
+                fetch('/api/users/login', {
+                    method: 'post',
+                    body: JSON.stringify({
+                        email: response.email,
+                        password: response.password,
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            })
+            .then(document.location.replace('/chat'));
 
-        if (response.ok) {
-            document.location.replace('/chat');
-        } else {
-            alert(response.statusText);
-        }
+
+        // if (response.ok) {
+        //     localStorage.setItem('alert', '# 2 Routed to home page from register');
+        //     document.location.replace('/chat');
+        // } else {
+        //     alert(response.statusText);
+        // }
     }
 }
 
