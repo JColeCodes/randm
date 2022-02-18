@@ -26,7 +26,7 @@ function displayRecentChat() {
                 recentList.innerHTML = `<li>You currently have no chats.</li>`;
             }
         })
-        .catch(response => document.location.reload());
+        .catch(response => console.log(response));
 }
 
 displayRecentChat();
