@@ -4,7 +4,7 @@ function displayRecentChat() {
     fetch('/api/messages/recent', { method: 'GET' })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             if (data.length > 0) {
                 const pageUrl = document.location.href.split('/');
                 data.forEach(element => {
