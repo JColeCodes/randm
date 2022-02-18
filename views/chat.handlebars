@@ -26,7 +26,10 @@
     <div class="current-chat">
       {{#if chatHome}}
       <div class="chat-home">
-        <button>Randomize a new chat</button>
+        {{#with userLatest.currentUser}}
+        <button id="random-btn" data-user="{{id}}">Randomize a new chat</button>
+        {{/with}}
+        <script src="/assets/js/random-chat.js"></script>
       </div>
       {{else}}
       <div class="user-info">
@@ -56,11 +59,12 @@
         {{/with}}
         
       </form>
-      <script src="/assets/js/chat.js"></script>
+      <script src="/assets/js/message.js"></script>
       <script src="/assets/js/scroll.js"></script>
       {{/if}}
     </div>
   </main>
 </div>
+
 
 <script src="/assets/js/logout.js"></script>
