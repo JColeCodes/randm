@@ -59,7 +59,9 @@
       </div>
 
       <form class="send-message">
-        <input type="text" id="message"/>
+        {{#with userLatest.currentChatter as |user|}}
+        <input type="text" id="message" placeholder="Send a message to {{user.first_name}}..."/>
+        {{/with}}
         
         {{#with userLatest.currentUser}}
         <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>

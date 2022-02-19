@@ -234,6 +234,10 @@ input:focus {
     margin: 10px auto;
     font-weight: bold;
     font-size: 1.1em;
+    border-radius: 10px;
+}
+.current-chat .chat-home button:hover {
+    background-color: var(--secondary-lighter);
 }
 /* About the chatter at top */
 .current-chat .user-info {
@@ -284,12 +288,18 @@ input:focus {
     font-size: 1.1em;
     font-weight: bolder;
 }
+.current-chat .send-message input::placeholder, .unlogged-page .forms textarea::placeholder {
+    color: var(--mid-color);
+    font-style: italic;
+}
 /* Chat box in middle */
 .current-chat .messages {
     flex: 1 1 1px;
     padding: 0 10px;
     display: flex;
     overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 .current-chat .messages ol {
     display: inline-block;
