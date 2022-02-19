@@ -14,8 +14,6 @@ async function signupFormHandler(event) {
     const bio = document.querySelector('#bio').value.trim();
 
     const birthday = new Date(dob).toISOString().slice(0, 10);
-    // console.log(birthday);
-    // console.log(typeofbirthday);
 
     const dobDate = Date.parse(dob);
 
@@ -48,10 +46,28 @@ async function signupFormHandler(event) {
         });
 
         if (response.ok) {
-            document.location.replace('/chat');
+            logUserIn(email, password);
         } else {
             alert(response.statusText);
         }
+    }
+}
+
+async function logUserIn(email, password) {
+
+    const response = await fetch('/api/users/login', {
+        method: 'post',
+        body: JSON.stringify({
+            email,
+            password,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {
+        document.location.replace('/chat');
+    } else {
+        alert(response.statusText);
     }
 }
 
