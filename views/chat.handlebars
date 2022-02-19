@@ -15,12 +15,19 @@
           </ul>
         </div>
       </div>
+      <div class="open-toggle">
+        <a href="#recent-chat-list">
+          <i class="fa-solid fa-clock"></i> 
+          <i class="fa-solid fa-message"></i> 
+        </a>
+      </div>
   </header>
 
   <main>
-    <div class="recent-chat">
+    <div class="recent-chat" id="recent-chat-list">
         <ul id="recent-list">
         </ul>
+        <a href="#" class="close-toggle"><i class="fa-solid fa-xmark"></i></a>
     </div>
     <script src="/assets/js/recent.js"></script>
 
@@ -53,7 +60,9 @@
       </div>
 
       <form class="send-message">
-        <input type="text" id="message"/>
+        {{#with userLatest.currentChatter as |user|}}
+        <input type="text" id="message" placeholder="Send a message to {{user.first_name}}..."/>
+        {{/with}}
         
         {{#with userLatest.currentUser}}
         <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
