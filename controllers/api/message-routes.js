@@ -32,22 +32,14 @@ router.get('/recent', (req, res) => {
     where: {
       [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }],
     },
-    // perform inner join on message table with message table to find all sent and received by one user?
     include: [
       {
         model: User,
         required: true,
         attributes: ['id', 'first_name', 'last_name'],
-        include: {
-          model: Message,
-          required: true,
-          // include message_text to display and created_at for date formatting
-          attributes: ['receiver_id', 'sender_id', 'created_at'],
-        },
       },
     ],
-    attributes: ['id', 'receiver_id', 'sender_id', 'message_text', 'created_at'],
-    order: [['created_at']],
+    order: [['createdAt']]
   })
     .then((dbMessageData) => {
       User.findAll({
@@ -57,22 +49,16 @@ router.get('/recent', (req, res) => {
           //res.json(dbUserData);
 
           const user = dbUserData.map((user) => user.get({ plain: true }));
-          // console.log(user);
+          console.log(user);
 
           const messages = dbMessageData.map((message) =>
             message.get({ plain: true })
           );
-          // console.log(messages);
-          return getUserLatest(messages, user, sessionId);
-        })
-        .then(userLatest => {
+          //console.log(messages);
+
+          let userLatest = getUserLatest(messages, user, sessionId);
           userLatest.latestChat.reverse();
-          // render all messages on homepage
-          res.render('chat', {
-            userLatest,
-            loggedIn: req.session.loggedIn,
-            chatHome: true,
-          });
+
           res.json(userLatest.latestChat);
         })
         .catch((err) => {

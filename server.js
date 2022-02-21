@@ -47,5 +47,4 @@ io.on ('connection', socket => {
 // Turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
-  server.keepAliveTimeout = 60000 * 2;
 });
