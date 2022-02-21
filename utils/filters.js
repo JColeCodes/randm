@@ -6,12 +6,10 @@ module.exports = {
         var currentChatter = user.filter(user => user.id == paramId);
         currentChatter = currentChatter[0];
         if (!paramId) {
-            var currentChatter = null;
+            currentChatter = null;
         }
 
-        console.log(paramId, currentChatter);
-
-        const latestChat = [];
+        let latestChat = [];
         if (messages) {
             messages.forEach(message => {
                 user.forEach(user => {
@@ -25,11 +23,6 @@ module.exports = {
                 });
             });
         }
-        
-        // if (req.params.id == sessionId) {
-        //     res.redirect('/chat');
-        //     return;
-        // }
 
         return { currentUser, currentChatter, latestChat };
     }

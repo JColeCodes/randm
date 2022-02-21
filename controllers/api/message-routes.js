@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         // add attributes
       },
     ],
-    order: [['created_at', 'DESC']],
+    //order: [['created_at', 'DESC']],
   })
     .then((dbMessageData) => res.json(dbMessageData))
     .catch((err) => {
@@ -24,6 +24,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/recent', (req, res) => {
+  if (!req.session.loggedIn) {
+    return;
+  }
   var sessionId = req.session.user_id;
   Message.findAll({
     where: {
@@ -39,11 +42,12 @@ router.get('/recent', (req, res) => {
           model: Message,
           required: true,
           // include message_text to display and created_at for date formatting
-          attributes: ['receiver_id', 'sender_id'],
+          attributes: ['receiver_id', 'sender_id', 'created_at'],
         },
       },
     ],
-    order: [['created_at', 'DESC']],
+    attributes: ['id', 'receiver_id', 'sender_id', 'message_text', 'created_at'],
+    order: [['created_at']],
   })
     .then((dbMessageData) => {
       User.findAll({
@@ -59,9 +63,10 @@ router.get('/recent', (req, res) => {
             message.get({ plain: true })
           );
           // console.log(messages);
-
-          const userLatest = getUserLatest(messages, user, sessionId);
-
+          return getUserLatest(messages, user, sessionId);
+        })
+        .then(userLatest => {
+          userLatest.latestChat.reverse();
           // render all messages on homepage
           res.render('chat', {
             userLatest,

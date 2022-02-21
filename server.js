@@ -2,7 +2,6 @@ const path = require('path');
 const express = require('express');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
-const models = require('./models');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const helpers = require('./utils/helpers');
@@ -48,4 +47,5 @@ io.on ('connection', socket => {
 // Turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
+  server.keepAliveTimeout = 60000 * 2;
 });
