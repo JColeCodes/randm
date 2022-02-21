@@ -1,1 +1,0 @@
-const welcomeInfo = document.querySelector('.welcome-info');
