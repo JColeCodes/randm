@@ -6,6 +6,7 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,7 +17,7 @@ const io = require('socket.io')(server);
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // setuo for use for cookies
 const sess = {
-  secret: 'Super secret secret',
+  secret: process.env.SECRET_SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -38,8 +39,8 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Socket.io
-io.on ('connection', socket => {
-  socket.on('new message', message => {
+io.on('connection', (socket) => {
+  socket.on('new message', (message) => {
     io.emit('new message', message);
   });
 });
