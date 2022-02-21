@@ -18,18 +18,18 @@ displayRecentChat()
             pageUrl = pageUrl[pageUrl.length - 1].split('#');
             data.forEach(element => {
                 let recentLi = document.createElement('li');
-                let recentLink = document.createElement('a');
-                recentLink.setAttribute('href', `/chat/${element.id}`);
+                recentLi.setAttribute('id' , `user-${element.id}`);
 
                 if (element.id == pageUrl[0]) {
                     recentLi.className = "selected";
                 }
-                recentLi.innerHTML = `
-                <h3 class="name"> ${element.first_name} ${element.last_name}</h3>
-                <span class="latest-message">${element.latestMessage}</span>`;
 
-                recentLink.appendChild(recentLi);
-                recentList.appendChild(recentLink);
+                recentLi.innerHTML = `<a href="/chat/${element.id}"><div>
+                <h3 class="name"> ${element.first_name.charAt(0).toUpperCase() + element.first_name.slice(1)} ${element.last_name.charAt(0).toUpperCase()}.</h3>
+                <span class="latest-message">${element.latest_message}</span>
+                </div></a>`;
+
+                recentList.appendChild(recentLi);
             });
         } else {
             recentList.innerHTML = `<li>You currently have no chats.</li>`;

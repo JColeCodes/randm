@@ -11,6 +11,8 @@ document.querySelector('.send-message').addEventListener('submit', event => {
         pageId = pageId.split('?')[0];
     }
 
+    //console.log(document.querySelector(`#user-${pageId}`).textContent);
+
     currId = document.querySelector('#send-message-btn').getAttribute('data-user');
     console.log(currId, pageId);
     
@@ -34,6 +36,18 @@ socket.on('new message', data => {
     pageUrl = pageUrl[pageUrl.length - 1].split('#')[0];
     if (pageUrl.includes('?')) {
         pageUrl = pageUrl.split('?')[0];
+    }
+
+    const recentList = document.querySelector('#recent-list');
+
+    if (fromId == senderId) {
+        document.querySelector(`#user-${toId}`).innerHTML = `<div><h3 class="name">${document.querySelector(`#user-${toId} .name`).textContent}</h3>
+        <span class="latest-message">${message}</span></div>`;
+        recentList.insertBefore(document.querySelector(`#user-${toId}`), recentList.children[0]);
+    } else if (toId == senderId) {
+        document.querySelector(`#user-${fromId}`).innerHTML = `<div><h3 class="name">${document.querySelector(`#user-${fromId} .name`).textContent}</h3>
+        <span class="latest-message">${message}</span></div>`;
+        recentList.insertBefore(document.querySelector(`#user-${fromId}`), recentList.children[0]);
     }
 
     if ((fromId == senderId && toId == pageUrl) || (fromId == pageUrl && toId == senderId)) {

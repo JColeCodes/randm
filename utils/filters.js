@@ -14,11 +14,10 @@ module.exports = {
             messages.forEach(message => {
                 user.forEach(user => {
                     if (((message.sender_id !== sessionId && user.id === message.sender_id) || (message.receiver_id !== sessionId && user.id === message.receiver_id))) {
-                        user.latestMessage = message.message_text;
                         if (!latestChat.includes(user)) {
+                            user.latest_message = message.message_text;
                             latestChat.push(user);
                         }
-                        
                     }
                 });
             });

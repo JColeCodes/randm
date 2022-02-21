@@ -39,7 +39,7 @@ router.get('/recent', (req, res) => {
         attributes: ['id', 'first_name', 'last_name'],
       },
     ],
-    order: [['createdAt']]
+    order: [['createdAt', 'DESC']]
   })
     .then((dbMessageData) => {
       User.findAll({
@@ -49,7 +49,7 @@ router.get('/recent', (req, res) => {
           //res.json(dbUserData);
 
           const user = dbUserData.map((user) => user.get({ plain: true }));
-          console.log(user);
+          //console.log(user);
 
           const messages = dbMessageData.map((message) =>
             message.get({ plain: true })
@@ -57,7 +57,6 @@ router.get('/recent', (req, res) => {
           //console.log(messages);
 
           let userLatest = getUserLatest(messages, user, sessionId);
-          userLatest.latestChat.reverse();
 
           res.json(userLatest.latestChat);
         })

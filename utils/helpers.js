@@ -7,7 +7,7 @@ module.exports = {
   },
   format_time: (time) => {
     let hour = new Date(time).getHours();
-    const minute = new Date(time).getMinutes();
+    let minute = new Date(time).getMinutes();
     let meridiem = 'AM';
     if (hour > 11) {
       meridiem = 'PM';
@@ -16,6 +16,9 @@ module.exports = {
       hour -= 12;
     } else if (hour == 0) {
       hour += 12;
+    }
+    if (String(minute).length == 1) {
+      minute = '0' + String(minute);
     }
     return `${hour}:${minute} ${meridiem}`;
   },
