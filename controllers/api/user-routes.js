@@ -6,7 +6,7 @@ const { User, Message } = require('../../models');
 // Get all users
 router.get('/', (req, res) => {
   User.findAll({
-    // attributes: { exclude: ['password'] },
+    attributes: { exclude: ['password', 'email', 'birthday'] },
   })
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
@@ -18,6 +18,7 @@ router.get('/', (req, res) => {
 // find one user by id
 router.get('/:id', (req, res) => {
   User.findOne({
+    attributes: { exclude: ['password', 'email', 'birthday'] },
     where: {
       id: req.params.id,
     },
@@ -46,18 +47,18 @@ router.get('/:id', (req, res) => {
 // add user to database on sign up
 router.post('/', (req, res) => {
   /* expects {
-        "email": "myemail@email.com", 
-        "password": "password1234",
-        "first_name": "user",
-        "last_name": "name",
-        "bio": "I am really interesting",
-        "gender": "non-binary",
-        "sexual_preference": "pansexual",
-        "pronouns": "they/them",
-        "birthday": "03/03/2003"
-        "blocked": [ user_id, user_id ]
-    }
-    */
+          "email": "myemail@email.com", 
+          "password": "password1234",
+          "first_name": "user",
+          "last_name": "name",
+          "bio": "I am really interesting",
+          "gender": "non-binary",
+          "sexual_preference": "pansexual",
+          "pronouns": "they/them",
+          "birthday": "03/03/2003"
+          "blocked": [ user_id, user_id ]
+      }
+      */
   // using req.body - necessary to outline every input?
   User.create(req.body)
     .then((dbUserData) => {

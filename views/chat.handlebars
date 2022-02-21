@@ -1,81 +1,80 @@
 <div class="logged-in">
   <header>
     <div class="logo">
-        <img src="/assets/images/logo-light.svg" alt="randm logo" />
+        <a href="/chat"><img src="/assets/images/logo-light.svg" alt="randm logo" /></a>
       </div>
       <div class="welcome-info">
-        {{#each user}}
-        <input type="hidden" id="userId" value='{{id}}'>
-          Hello, {{first_name}}! 
-          <i class="fa-solid fa-circle-user"></i>
-          {{/each}}
+        {{#with userLatest.currentUser}}
+        Hello, {{ capitalize_first_name first_name }}! 
+        <i class="fa-solid fa-circle-user"></i>
+        {{/with}}
+        <div class="user-options">
+          <ul>
+            <li><button id="logout-btn">Logout</button></li>
+            <li><button id="delete-btn">Delete Account</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="open-toggle">
+        <a href="#recent-chat-list">
+          <i class="fa-solid fa-clock"></i> 
+          <i class="fa-solid fa-message"></i> 
+        </a>
       </div>
   </header>
 
-<main>
-  <div class="recent-chat">
-      <ul>
-        {{#each messages}}
-        <li>
-          <h3 class="name">{{user.first_name}} {{user.last_name}}</h3>
-          <span class="latest-message">
-            {{#if @last}}{{message_text}}{{/if}}
-            </span>
-        </li>
-        {{/each}}
-      </ul>
-  </div>
-
-<div class="current-chat">
-    {{#if chatHome}}
-    <div class="chat-home">
-      This is the chat's homepage!
-      <button id="randomBtn">Randomize a new chat</button>
+  <main>
+    <div class="recent-chat" id="recent-chat-list">
+        <ul id="recent-list">
+        </ul>
+        <a href="#" class="close-toggle"><i class="fa-solid fa-xmark"></i></a>
     </div>
-    {{else}}
-    <div class="user-info">
-      <p class="in-chat">You're in a chat with</p>
-      {{#each messages}}
-      {{#if @first}}
-      <h2 class="chatter-name">{{user.first_name}} {{user.last_name}}</h2>
-      <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
-      <p class="chatter-bio">{{user.bio}}</p>
+    <script src="/assets/js/recent.js"></script>
+
+    <div class="current-chat">
+      {{#if chatHome}}
+      <div class="chat-home">
+        {{#with userLatest.currentUser}}
+        <button id="random-btn" data-user="{{id}}">Randomize a new chat</button>
+        {{/with}}
+        <script src="/assets/js/random-chat.js"></script>
+      </div>
+      {{else}}
+      <div class="user-info">
+        <p class="in-chat">You're in a chat with</p>
+        {{#with userLatest.currentChatter as |user|}}
+        <h2 class="chatter-name">{{ capitalize_first_name user.first_name }} {{ last_name_initial user.last_name}}</h2>
+        <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
+        <p class="chatter-bio">{{user.bio}}</p>
+        {{/with}}
+      </div>
+      <div class="messages">
+        <ol id="chat-messages">
+          {{#each messages}}
+          <li class="{{get_chat_class sender_id ../userLatest.currentUser.id}}">
+            <div class="message">{{message_text}}</div>
+            <p class="sent-time">{{format_time created_at}}</p>
+          </li>
+          {{/each}}
+        </ol>
+      </div>
+
+      <form class="send-message">
+        {{#with userLatest.currentChatter as |user|}}
+        <input type="text" id="message" placeholder="Send a message to {{user.first_name}}..."/>
+        {{/with}}
+        
+        {{#with userLatest.currentUser}}
+        <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
+        {{/with}}
+        
+      </form>
+      <script src="/assets/js/message.js"></script>
+      <script src="/assets/js/socket.js"></script>
       {{/if}}
-      {{/each}}
     </div>
-    <div class="messages">
-      <ol>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="sent">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="received">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-        <li class="sent">
-          <div class="message"></div>
-          <p class="sent-time"></p>
-        </li>
-      </ol>
-    </div>
-    {{/if}}
-  </div>
+  </main>
+</div>
 
-<form class="send-message">
-  <input type="text" id="message"/>
-  {{#each user}}
-  <button type="submit" id="send-message-btn" data-user="{{id}}">Send</button>
-  {{/each}}
-</form>
-
-<script src="/assets/javascript/chat.js"></script>
-<script src="/assets/javascript/logout.js"></script>
+<script src="/assets/js/logout.js"></script>
+<script src="/assets/js/delete-user.js"></script>

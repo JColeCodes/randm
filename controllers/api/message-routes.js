@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const sequelize = require('../../config/connection');
 const { User, Message } = require('../../models');
 const { Op } = require('sequelize');
-
+const { getUserLatest } = require('../../utils/filters');
 // GET ROUTE
 
 // find all messages
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
         // add attributes
       },
     ],
+    order: [['created_at', 'DESC']],
   })
     .then((dbMessageData) => res.json(dbMessageData))
     .catch((err) => {
@@ -22,6 +24,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/recent', (req, res) => {
+  var sessionId = req.session.user_id;
   Message.findAll({
     where: {
       [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }],
@@ -40,6 +43,7 @@ router.get('/recent', (req, res) => {
         },
       },
     ],
+    order: [['created_at', 'DESC']],
   })
     .then((dbMessageData) => {
       User.findAll({
@@ -49,12 +53,12 @@ router.get('/recent', (req, res) => {
           //res.json(dbUserData);
 
           const user = dbUserData.map((user) => user.get({ plain: true }));
-          console.log(user);
+          // console.log(user);
 
           const messages = dbMessageData.map((message) =>
             message.get({ plain: true })
           );
-          console.log(messages);
+          // console.log(messages);
 
           const userLatest = getUserLatest(messages, user, sessionId);
 

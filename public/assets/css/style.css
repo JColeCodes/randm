@@ -7,11 +7,6 @@
     --darkest-color: #7C8385; /* Darker-Gray Color */
     --sidebar-color: #EDF3F3; /* Sidebar Background Color */
     --sidebar-highlight-color: #E0E9E9; /* Sidebar Highlight Color */
-    --desktop: 1200px;
-    --laptop:1024px;
-    --tablet:768px;
-    --phone:480px;
-    
 }
 
 * {
@@ -26,14 +21,10 @@ body {
     line-height: 1;
     background-color: var(--lightest-color);
     color: var(--darkest-color);
-    
 }
 
-
-
-
-
 a, a:hover, button, button:hover, li, li:hover { transition: all 0.5s ease-in-out; }
+button:hover { cursor: pointer; }
 
 a {
     color: var(--main-color);
@@ -43,291 +34,13 @@ a:hover {
     color: var(--secondary-color);
 }
 input:focus {
-    outline: 2px solid var(--secondary-lighter);
+    outline: 0;
+}
+.open-toggle, .close-toggle {
+    display: none;
 }
 
 /* IF NOT LOGGED IN */
-.unlogged-page {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    min-height: calc(100vh - 40px);
-}
-/* Display logo on left */
-@media screen and  (min-width: 40px) and (max-width: 767px) {
-    
-.unlogged-page .logo {
-    
-
-        margin: 0;
-     align-items: center;
-    
-    }
-
-.unlogged-page .logo img {
-    width: 100%;
-}
-/* Display form on right */
-.unlogged-page .forms {
-    width: calc(100% 9px);
-    margin: 5% 0px 05% 0px;
-    background-color: var(--sidebar-color);
-    padding: 20px;
-    font-size: 1.2em;
-    align-items: center;
-}
-.unlogged-page .forms input {
-    padding: 10px;
-    margin: 5px 0 15px;
-    width: 100%;
-    font-size: .9em;
-    background-color: white;
-    border: 1px solid var(--sidebar-highlight-color);
-    color: var(--darkest-color);
-}
-
-.unlogged-page .forms button {
-    padding: 10px;
-    margin: 0;
-    align-items: center;
-    font-size: 1.5em;
-    border: none;
-    background: var(--secondary-lighter);
-    color: white;
-
-}
-.unlogged-page .forms .form-message {
-    font-size: .9em;
-    font-style: italic;
-    margin: 15px 0 0;
-}
-
-/* IF USER IS LOGGED IN */
-.logged-in {
-    display: flex;
-    justify-content: space-between;
-    flex-flow: column;
-    height: 100vh;
- }
- /* Header */
-.logged-in header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: var(--main-color);
-    color: white;
-}
-.logged-in header .logo {
-    width: 10%;
-}
-.logged-in header .logo img {
-    height: 60px;
-    margin: 10px 0;
-}
-.logged-in header .welcome-info i {
-    font-size: 1.5em;
-}
-/* Main Content */
-.logged-in main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    flex: 1;
-}
-/* Recent Chat Names on left */
-.recent-chat {
-    width: 30%;
-    background-color: var(--sidebar-color);
-}
-.recent-chat ul li {
-    padding: 20px;
-    border-bottom: 2px solid var(--sidebar-highlight-color);
-}
-.recent-chat ul li.selected {
-    border: none;
-    background-color: var(--sidebar-highlight-color);
-}
-.recent-chat ul li h3.name {
-    color: var(--main-color);
-    font-size: 1.3em;
-}
-.recent-chat ul li span.latest-message {
-    color: var(--darkest-color);
-    font-style: italic;
-    padding: 5px 0 0;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-/* Current Chat Box on right */
-.current-chat {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    flex-flow: column;
-    height: 100%;
-}
-/* About the chatter at top */
-.current-chat .user-info {
-    margin: 15px 20px 0;
-    padding: 0 0 10px 0;
-    border-bottom: 2px solid var(--sidebar-highlight-color);
-    text-align: center;
-}
-.current-chat .user-info h2.chatter-name {
-    color: var(--main-color);
-    font-size: 1.8em;
-    font-weight: bold;
-    padding: 3px;
-}
-.current-chat .user-info p {
-    color: var(--mid-color);
-    padding: 5px;
-}
-.current-chat .user-info p.in-chat {
-    font-size: 1.2em;
-    font-weight: bold;
-}
-.current-chat .user-info p.chatter-info {
-    font-style: italic;
-}
-.current-chat .user-info p.chatter-bio {
-    color: var(--darkest-color);
-}
-/* Send Message Input at bottom */
-.current-chat .send-message {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-.current-chat .send-message input {
-    flex: 1;
-    background-color: white;
-    color: var(--darkest-color);
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid var(--sidebar-highlight-color);
-}
-.current-chat .send-message button {
-    background-color: var(--secondary-lighter);
-    color: white;
-    padding: 10px 2px;
-    border: none;
-    font-size: 1.1em;
-    font-weight: bolder;
-}
-/* Chat box in middle */
-.current-chat .messages {
-    flex: 1;
-    padding: 0 10px;
-    display: flex;
-    height: 100%;
-}
-.current-chat .messages ol {
-    display: inline-block;
-    align-self: flex-end;
-    list-style-type: none;
-}
-.current-chat .messages ol li {
-    display: block;
-    margin: 10px;
-}
-.current-chat .messages ol li .message {
-    padding: 12px 15px;
-    border-radius: 10px;
-    max-width: 50%; width: auto;
-    display: inline-block;
-    color: white;
-    line-height: 1.3;
-}
-.current-chat .messages ol li.received {
-    text-align: left;
-}
-.current-chat .messages ol li.sent {
-    text-align: right;
-}
-.current-chat .messages ol li.received .message {
-    background-color: var(--secondary-color);
-}
-.current-chat .messages ol li.sent .message {
-    background-color: var(--main-color);
-}
-.current-chat .messages ol li p.sent-time {
-    color: var(--mid-color);
-    text-transform: uppercase;
-    font-size: .9em;
-    margin: 5px;
-}
-
-
-}
-
-   
-
-    
-    @media screen and  (min-width: 768px) and (max-width: 1080px) {
-        
-    
-
-    /* IF NOT LOGGED IN */
-.unlogged-page {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    min-height: calc(100vh - 40px);
-}
-/* Display logo on left */
-.unlogged-page .logo {
-    width: calc(55% - 30px);
-    margin: 0 10px 0 20px;
-}
-.unlogged-page .logo img {
-    width: 100%;
-}
-/* Display form on right */
-.unlogged-page .forms {
-    width: calc(45% - 30px);
-    margin: 0 10px 0 20px;
-    background-color: var(--sidebar-color);
-    padding: 20px;
-    font-size: 1.2em;
-}
-.unlogged-page .forms input {
-    padding: 10px;
-    margin: 5px 0 15px;
-    width: 100%;
-    font-size: .9em;
-    background-color: white;
-    border: 1px solid var(--sidebar-highlight-color);
-    color: var(--darkest-color);
-}
-.unlogged-page .forms button {
-    padding: 10px;
-    font-size: 1.5em;
-    border: none;
-    background-color: var(--secondary-lighter);
-    color: white;
-}
-.unlogged-page .forms .form-message {
-    font-size: .9em;
-    font-style: italic;
-    margin: 15px 0 0;
-}
-       
-}
-
-@media screen and  (min-width: 1081px)  {
-
-    /* IF NOT LOGGED IN */
 .unlogged-page {
     display: flex;
     flex-wrap: wrap;
@@ -347,24 +60,32 @@ input:focus {
 }
 /* Display form on right */
 .unlogged-page .forms {
-    width: calc(38% - 80px);
+    width: calc(40% - 40px);
     margin: 0;
     background-color: var(--sidebar-color);
     padding: 20px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
-.unlogged-page .forms input {
+.unlogged-page .forms input, .unlogged-page .forms select, .unlogged-page .forms textarea {
     padding: 10px;
     margin: 5px 0 15px;
     width: 100%;
-    font-size: .9em;
+    font-size: 1em;
     background-color: white;
     border: 1px solid var(--sidebar-highlight-color);
     color: var(--darkest-color);
+    font-family: 'Lato', sans-serif;
+}
+.unlogged-page .forms textarea {
+    height: 120px;
+}
+.unlogged-page .forms input:focus, .unlogged-page .forms select:focus, .unlogged-page .forms textarea:focus {
+    outline: 1px solid var(--secondary-lighter);
+    border: 1px solid white;
 }
 .unlogged-page .forms button {
     padding: 10px;
-    font-size: 1.9em;
+    font-size: 1em;
     border: none;
     background-color: var(--secondary-lighter);
     color: white;
@@ -374,9 +95,6 @@ input:focus {
     font-style: italic;
     margin: 15px 0 0;
 }
-
-}
-
 
 /* IF USER IS LOGGED IN */
  .logged-in {
@@ -404,6 +122,39 @@ input:focus {
 }
 .logged-in header .welcome-info i {
     font-size: 1.5em;
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+.logged-in header .welcome-info .user-options {
+    z-index: -1;
+    position: absolute;
+    background-color: white;
+    border: 1px solid var(--sidebar-highlight-color);
+    box-shadow: 0 0 1px var(--darkest-color);
+    padding: 10px;
+    right: 20px;
+    opacity: 0;
+    transition: all 0.1s ease-in-out;
+}
+.logged-in header .welcome-info:hover .user-options {
+    z-index: 100;
+    opacity: 1;
+    transition: all 0.1s ease-in-out;
+}
+.logged-in header .welcome-info .user-options ul {
+    list-style-type: none;
+    margin: 0;
+}
+.logged-in header .welcome-info .user-options ul button {
+    padding: 5px 15px;
+    border: none;
+    background-color: transparent;
+    color: var(--darkest-color);
+    font-size: 1em;
+    text-align: center;
+}
+.logged-in header .welcome-info .user-options ul button:hover {
+    color: var(--secondary-color);
 }
 /* Main Content */
 .logged-in main {
@@ -428,6 +179,11 @@ input:focus {
 .recent-chat ul li h3.name {
     color: var(--main-color);
     font-size: 1.3em;
+    transition: all 0.5s ease-in-out;
+}
+.recent-chat ul li:hover h3.name {
+    color: var(--secondary-color);
+    transition: all 0.5s ease-in-out;
 }
 .recent-chat ul li span.latest-message {
     color: var(--darkest-color);
@@ -438,6 +194,22 @@ input:focus {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.recent-chat li.error-msg {
+    color: var(--main-color);
+}
+.recent-chat .error-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: 0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: .9em;
+    display: block;
+}
+.recent-chat .error-btn:hover {
+    background-color: var(--secondary-lighter);
+}
 /* Current Chat Box on right */
 .current-chat {
     width: 70%;
@@ -445,6 +217,27 @@ input:focus {
     justify-content: space-between;
     flex-flow: column;
     height: 100%;
+}
+/* Chat Home */
+.current-chat .chat-home {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.current-chat .chat-home button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: 0;
+    padding: 15px;
+    margin: 10px auto;
+    font-weight: bold;
+    font-size: 1.1em;
+    border-radius: 10px;
+}
+.current-chat .chat-home button:hover {
+    background-color: var(--secondary-lighter);
 }
 /* About the chatter at top */
 .current-chat .user-info {
@@ -477,7 +270,7 @@ input:focus {
 .current-chat .send-message {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 .current-chat .send-message input {
     flex: 1;
@@ -495,17 +288,26 @@ input:focus {
     font-size: 1.1em;
     font-weight: bolder;
 }
+.current-chat .send-message input::placeholder, .unlogged-page .forms textarea::placeholder {
+    color: var(--mid-color);
+    font-style: italic;
+}
 /* Chat box in middle */
 .current-chat .messages {
-    flex: 1;
+    flex: 1 1 1px;
     padding: 0 10px;
     display: flex;
-    height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
 }
 .current-chat .messages ol {
     display: inline-block;
-    align-self: flex-end;
     list-style-type: none;
+    width: 100%;
+}
+.current-chat .messages ol.short {
+    align-self: flex-end;
 }
 .current-chat .messages ol li {
     display: block;
@@ -535,5 +337,174 @@ input:focus {
     color: var(--mid-color);
     text-transform: uppercase;
     font-size: .9em;
-    margin: 5px;
+    margin: 5px 5px 15px;
+}
+
+/* EXTRA */
+/* Highlight selection */
+::-moz-selection { /* Code for Firefox */
+    color: var(--lightest-color);
+    background: var(--secondary-lighter);
+}
+::selection {
+    color: var(--lightest-color);
+    background: var(--secondary-lighter);
+}
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background: #F6F9F9; 
+}
+::-webkit-scrollbar-thumb {
+    background: #E0E9E9; 
+    border-radius: 7px;
+    border: 2px solid #F6F9F9;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #AFB5B6;
+}
+
+/* @MEDIA QUERIES FOR RESPONSIVE SITE */
+@media screen and (max-width: 1024px) {
+    /* Display logo on left */
+    .unlogged-page .logo {
+        width: calc(40% - 40px);
+        margin: 0 20px;
+    }
+    .unlogged-page .forms {
+        width: calc(60% - 40px);
+    }
+    .unlogged-page .forms button {
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .unlogged-page {
+        flex-direction: column;
+    }
+    .unlogged-page .logo {
+        margin: 0;
+        width: 80%;
+        padding: 0 30px 30px;
+    }
+    /* Display form on right */
+    .unlogged-page .forms {
+        width: 80%;
+        margin: 0;
+        font-size: 1.1em;
+        align-items: center;
+    }
+    .unlogged-page .forms button {
+        margin: 0;
+        align-items: center;
+        font-size: 1em;
+        border: none;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    body {
+        font-size: 18px;
+    }
+    .unlogged-page .logo, .unlogged-page .forms {
+        width: 100%;
+    }
+    .open-toggle, .close-toggle {
+        display: block;
+    }
+    .logged-in header .open-toggle {
+        width: 100%;
+        margin: 15px 0 25px;
+    }
+    .logged-in header .open-toggle a {
+        color: white;
+        background-color: var(--secondary-color);
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .logged-in main {
+        position: relative;
+    }
+    /* Recent Chat Names on left */
+    .recent-chat {
+        width: 80%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -100%;
+        transition: all 0.5s ease-in-out;
+    }
+    .recent-chat a.close-toggle {
+        position: absolute;
+        left: calc(100% + 15px);
+        top: 10px;
+        color: white;
+        font-size: 2em;
+    }
+    .recent-chat a.close-toggle:hover {
+        color: var(--sidebar-highlight-color);
+        transform: rotate(180deg);
+    }
+    .recent-chat::before {
+        content: '';
+        width: 25%;
+        background-color: rgba(0,0,0,.3);
+        transition: all 0.5s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+    }
+    .recent-chat:target {
+        left: 0;
+        transition: all 0.5s ease-in-out;
+    }
+    .recent-chat:target::before {
+        transition: all 0.5s ease-in-out;
+        left: 100%;
+    }
+    /* Current Chat Box on right */
+    .current-chat {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .recent-chat li.error-msg {
+        margin: 0 50px 0 0;
+    }
+    .logged-in header .logo {
+        width: 100%;
+        padding: 10px 0;
+    }
+    .logged-in header .logo img {
+        height: auto;
+        width: 100%;
+        margin: 0;
+    }
+    .logged-in header .open-toggle {
+        width: auto;
+        order: 2;
+        font-size: .9em;
+    }
+    .logged-in header .welcome-info {
+        order: 3;
+        margin-bottom: 15px;
+    }
+    .recent-chat {
+        width: 100%;
+    }
+    .recent-chat a.close-toggle {
+        left: calc(100% - 38px);
+        color: var(--secondary-lighter);
+    }
+    .recent-chat a.close-toggle:hover {
+        color: var(--secondary-color);
+    }
+    .recent-chat::before {
+        display: none;
+    }
 }
