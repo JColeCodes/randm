@@ -23,10 +23,7 @@ async function sendMessageFormHandler(event) {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        if (response.ok) {
-            // reload current page so new message will be added to thread
-            document.location.reload();
-        } else {
+        if (!response.ok) {
             alert(response.statusText);
         }
     }

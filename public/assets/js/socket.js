@@ -6,9 +6,12 @@ document.querySelector('.send-message').addEventListener('submit', event => {
     event.preventDefault();
 
     pageId = document.location.href.split('/');
-    pageId = parseInt(pageId[pageId.length - 1].split('#')[0]);
+    pageId = pageId[pageId.length - 1].split('#')[0];
+    if (pageId.includes('?')) {
+        pageId = pageId.split('?')[0];
+    }
 
-    currId = parseInt(document.querySelector('#send-message-btn').getAttribute('data-user'));
+    currId = document.querySelector('#send-message-btn').getAttribute('data-user');
     console.log(currId, pageId);
     
     if (document.querySelector('#message').value === '') {
@@ -26,9 +29,12 @@ socket.on('new message', data => {
     const fromId = data.from;
     const toId = data.to;
 
-    const senderId = parseInt(document.querySelector('#send-message-btn').getAttribute('data-user'));
+    const senderId = document.querySelector('#send-message-btn').getAttribute('data-user');
     let pageUrl = document.location.href.split('/');
     pageUrl = pageUrl[pageUrl.length - 1].split('#')[0];
+    if (pageUrl.includes('?')) {
+        pageUrl = pageUrl.split('?')[0];
+    }
 
     if ((fromId == senderId && toId == pageUrl) || (fromId == pageUrl && toId == senderId)) {
     
