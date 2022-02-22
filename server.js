@@ -15,15 +15,15 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-// setuo for use for cookies
+// Setup for cookies use
 const sess = {
   secret: process.env.SECRET_SECRET,
   cookie: {},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
-    db: sequelize,
-  }),
+    db: sequelize
+  })
 };
 
 app.use(session(sess));

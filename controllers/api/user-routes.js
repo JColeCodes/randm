@@ -1,12 +1,10 @@
 const router = require('express').Router();
 const { User, Message } = require('../../models');
 
-// GET ROUTES
-
 // Get all users
 router.get('/', (req, res) => {
   User.findAll({
-    attributes: { exclude: ['password', 'email', 'birthday'] },
+    attributes: { exclude: ['password', 'email', 'birthday'] }
   })
     .then((dbUserData) => res.json(dbUserData))
     .catch((err) => {
@@ -15,19 +13,11 @@ router.get('/', (req, res) => {
     });
 });
 
-// find one user by id
+// Find one user by id
 router.get('/:id', (req, res) => {
   User.findOne({
-    attributes: { exclude: ['password', 'email', 'birthday'] },
-    where: {
-      id: req.params.id,
-    },
-    include: [
-      {
-        model: Message,
-        attributes: ['id', 'receiver_id', 'message_text', 'created_at'],
-      },
-    ],
+    where: { id: req.params.id },
+    attributes: { exclude: ['password', 'email', 'birthday'] }
   })
     .then((dbUserData) => {
       if (!dbUserData) {
@@ -42,35 +32,22 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// POST ROUTES
-
-// add user to database on sign up
+// Add user to database on register
 router.post('/', (req, res) => {
-  /* expects {
-          "email": "myemail@email.com", 
-          "password": "password1234",
-          "first_name": "user",
-          "last_name": "name",
-          "bio": "I am really interesting",
-          "gender": "non-binary",
-          "sexual_preference": "pansexual",
-          "pronouns": "they/them",
-          "birthday": "03/03/2003"
-          "blocked": [ user_id, user_id ]
-      }
-      */
-  // using req.body - necessary to outline every input?
+  /* Expects: {
+    "email": "myemail@email.com", 
+    "password": "password1234",
+    "first_name": "user",
+    "last_name": "name",
+    "bio": "I am really interesting",
+    "gender": "non-binary",
+    "sexual_preference": "pansexual",
+    "pronouns": "they/them",
+    "birthday": "03/03/2003"
+  } */
   User.create(req.body)
     .then((dbUserData) => {
       res.json(dbUserData);
-      // save username and id to session and set loggedIn to true
-      // req.session.save(() => {
-      //     req.session.user_id = dbUserData.id;
-      //     req.session.email = dbUserData.email;
-      //     req.session.loggedIn = true;
-      //     // JSON response
-      //     res.json(dbUserData);
-      // });
     })
     .catch((err) => {
       console.log(err);
@@ -80,26 +57,22 @@ router.post('/', (req, res) => {
 
 // Login verification post route to /login endpoint
 router.post('/login', (req, res) => {
-  // expects {"email": "myemail@email.com", "password": "password1"}
+  // Expects: {"email": "myemail@email.com", "password": "password1234"}
   User.findOne({
-    where: {
-      email: req.body.email,
-    },
+    where: { email: req.body.email }
   }).then((dbUserData) => {
     if (!dbUserData) {
-      res
-        .status(400)
-        .json({ message: 'No user found with that email address' });
+      res.status(400).json({ message: 'No user found with that email address' });
       return;
     }
 
+    // Check password validity
     const validPassword = dbUserData.checkPassword(req.body.password);
-
     if (!validPassword) {
       res.status(400).json({ message: 'Incorrect password' });
       return;
     }
-    // save session data, set status to loggedIn true
+    // Save session data and set status to loggedIn true
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.email = dbUserData.email;
@@ -110,7 +83,7 @@ router.post('/login', (req, res) => {
   });
 });
 
-// destroy the session on logout
+// Destroy the session on logout
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
@@ -121,40 +94,12 @@ router.post('/logout', (req, res) => {
   }
 });
 
-// PUT ROUTE
-
-// allow user to update their information
-router.put('/:id', (req, res) => {
-  // expects some or all user info to update
-  // pass in req.body, only update what's passed through
-  User.update(req.body, {
-    // set hooks to true to hash the updated password
-    individualHooks: true,
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((dbUserData) => {
-      if (!dbUserData) {
-        res.status(404).json({ message: 'No user found with this id' });
-        return;
-      }
-      res.json(dbUserData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-// DELETE ROUTE
-
-// delete a user by id
+// Delete a user by id
 router.delete('/:id', (req, res) => {
   User.destroy({
     where: {
-      id: req.params.id,
-    },
+      id: req.params.id
+    }
   })
     .then((dbUserData) => {
       if (!dbUserData) {

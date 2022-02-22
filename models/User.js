@@ -14,51 +14,51 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
     first_name: {
       type: DataTypes.STRING,
-      allowNUll: false,
+      allowNUll: false
     },
     last_name: {
       type: DataTypes.STRING,
-      allowNUll: false,
+      allowNUll: false
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true,
-      },
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8],
-      },
+        len: [8]
+      }
     },
     bio: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     gender: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     sexual_preference: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     pronouns: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     birthday: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   },
   {
     hooks: {
@@ -72,13 +72,13 @@ User.init(
           10
         );
         return updatedUserData;
-      },
+      }
     },
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'user',
+    modelName: 'user'
   }
 );
 

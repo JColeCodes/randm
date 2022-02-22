@@ -1,117 +1,103 @@
 const router = require('express').Router();
-const sequelize = require('../../config/connection');
 const { User, Message } = require('../../models');
 const { Op } = require('sequelize');
 const { getUserLatest } = require('../../utils/filters');
-// GET ROUTE
 
-// find all messages
+// Get all messages of user if logged in
 router.get('/', (req, res) => {
-  Message.findAll({
-    include: [
-      {
-        model: User,
-        // add attributes
-      },
-    ],
-    //order: [['created_at', 'DESC']],
-  })
-    .then((dbMessageData) => res.json(dbMessageData))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
-
-router.get('/recent', (req, res) => {
+  // If not logged in, redirect to login page
   if (!req.session.loggedIn) {
+    res.redirect('/login');
     return;
   }
   var sessionId = req.session.user_id;
   Message.findAll({
     where: {
-      [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }],
+      // If receiver id OR sender id = session id
+      [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }]
     },
+    attributes: ['id', 'message_text', 'createdAt'],
     include: [
       {
+        // Includes message sender
         model: User,
-        required: true,
-        attributes: ['id', 'first_name', 'last_name'],
+        as: 'sender',
+        attributes: ['id', 'first_name', 'last_name']
       },
-    ],
+      {
+        // Includes message receiver
+        model: User,
+        as: 'receiver',
+        attributes: ['id', 'first_name', 'last_name']
+      }
+    ]
+  })
+    .then((dbMessageData) => res.json(dbMessageData))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// Get recent messages
+router.get('/recent', (req, res) => {
+  // If not logged in, redirect to login page
+  if (!req.session.loggedIn) {
+    res.redirect('/login');
+    return;
+  }
+  var sessionId = req.session.user_id;
+  Message.findAll({
+    where: {
+      // If receiver id OR sender id = session id
+      [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }]
+    },
     order: [['createdAt', 'DESC']]
   })
     .then((dbMessageData) => {
+      // Find all users
       User.findAll({
-        attributes: ['id', 'first_name', 'last_name'],
+        attributes: ['id', 'first_name', 'last_name']
       })
         .then((dbUserData) => {
-          //res.json(dbUserData);
-
+          // Map users for plain javascript of data
           const user = dbUserData.map((user) => user.get({ plain: true }));
-          //console.log(user);
 
+          // Map messages for plain javascript of data
           const messages = dbMessageData.map((message) =>
             message.get({ plain: true })
           );
-          //console.log(messages);
 
+          // Gets latest chat message for every conversation user has
           let userLatest = getUserLatest(messages, user, sessionId);
 
           res.json(userLatest.latestChat);
         })
+        // Error catch for User.findAll
         .catch((err) => {
           console.log(err);
           res.status(500).json(err);
         });
     })
+    // Error catch for Message.findAll
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });
 });
 
-// POST ROUTE
-
-// post new message
+// Post new message
 router.post('/', (req, res) => {
-  // check the session login status
-  //if (req.session) {
+  // Creates new message with information sent from public/assets/message.js
   Message.create({
-    // will need to pull receiver id from /:id params
     sender_id: req.body.sender_id,
     receiver_id: req.body.receiver_id,
-    message_text: req.body.message_text,
-    // use the id from the session
-    //user_id: req.session.user_id
+    message_text: req.body.message_text
   })
     .then((dbMessageData) => res.json(dbMessageData))
     .catch((err) => {
       console.log(err);
       res.status(400).json(err);
-    });
-  //}
-});
-
-// DELETE ROUTE
-
-// delete message by id
-router.delete('/:id', (req, res) => {
-  Message.destroy({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((dbMessageData) => {
-      if (!dbMessageData) {
-        res.status(404).json({ message: 'No message found with this id' });
-        return;
-      }
-      res.json(dbMessageData);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
     });
 });
 
