@@ -74,6 +74,11 @@ router.get('/chat/:id', (req, res) => {
     res.redirect('/login');
     return;
   }
+  // If user is chatting with everyone, reroute undefined to chat home
+  if (req.params.id == 'undefined') {
+    res.redirect('/chat');
+    return;
+  }
 
   sessionId = req.session.user_id;
   // If user goes to page with their own id, redirect them to home, they can't chat alone
@@ -119,7 +124,10 @@ router.get('/chat/:id', (req, res) => {
             }
           });
           // If user does not exist, redirect to chat home
-          if (!userExist) res.redirect('/');
+          if (!userExist) {
+            res.redirect('/');
+            return;
+          }
 
           // Map messages for plain javascript of data
           const messages = dbMessageData.map((message) =>

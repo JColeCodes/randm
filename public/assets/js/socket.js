@@ -53,7 +53,7 @@ socket.on('new message', (data) => {
     // If the message is sent by current user
     document.querySelector(
       `#user-${toId}`
-    ).innerHTML = `<a href="/chat/${toId}"><<div><h3 class="name">${
+    ).innerHTML = `<a href="/chat/${toId}"><div><h3 class="name">${
       document.querySelector(`#user-${toId} .name`).textContent
     }</h3>
         <span class="latest-message">${message}</span></div></a>`;
@@ -63,7 +63,7 @@ socket.on('new message', (data) => {
     // If the message is received by current user
     document.querySelector(
       `#user-${fromId}`
-    ).innerHTML = `<a href="/chat/${fromId}"><<div><h3 class="name">${
+    ).innerHTML = `<a href="/chat/${fromId}"><div><h3 class="name">${
       document.querySelector(`#user-${fromId} .name`).textContent
     }</h3>
         <span class="latest-message">${message}</span></div></a>`;
