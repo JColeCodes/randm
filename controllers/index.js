@@ -6,7 +6,7 @@ router.use('/api', apiRoutes); // Routes for /api
 router.use('/', homeRoutes); // Routes for public files and pages
 
 router.use((req, res) => {
-    res.status(404).end();
+  res.status(404).end();
 });
 
 module.exports = router;

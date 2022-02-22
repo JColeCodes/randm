@@ -3,38 +3,41 @@ const sequelize = require('../config/connection');
 
 class Message extends Model {}
 
-Message.init({
+Message.init(
+  {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true
     },
     sender_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'user',
-            key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
     },
     receiver_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'user',
-            key: 'id',
-        },
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'user',
+        key: 'id'
+      }
     },
     message_text: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-}, {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  },
+  {
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'message',
-});
+    modelName: 'message'
+  }
+);
 
 module.exports = Message;

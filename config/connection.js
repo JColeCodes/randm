@@ -1,14 +1,15 @@
-// Inport Sequelize
+// Import Sequelize
 const Sequelize = require('sequelize');
-// .env for hiding database information
+// Require .env for hiding database information
 require('dotenv').config();
 
 let sequelize;
 
+// If connected to JawsDB
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
-  // Create connection to our database
+  // Else, create connection to our local database
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -16,7 +17,7 @@ if (process.env.JAWSDB_URL) {
     {
       host: 'localhost',
       dialect: 'mysql',
-      port: 3306,
+      port: 3306
     }
   );
 }
