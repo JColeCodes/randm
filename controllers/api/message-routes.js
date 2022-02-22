@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         // add attributes
       },
     ],
-    order: [['created_at', 'DESC']],
+    //order: [['created_at', 'DESC']],
   })
     .then((dbMessageData) => res.json(dbMessageData))
     .catch((err) => {
@@ -24,26 +24,22 @@ router.get('/', (req, res) => {
 });
 
 router.get('/recent', (req, res) => {
+  if (!req.session.loggedIn) {
+    return;
+  }
   var sessionId = req.session.user_id;
   Message.findAll({
     where: {
       [Op.or]: [{ receiver_id: sessionId }, { sender_id: sessionId }],
     },
-    // perform inner join on message table with message table to find all sent and received by one user?
     include: [
       {
         model: User,
         required: true,
         attributes: ['id', 'first_name', 'last_name'],
-        include: {
-          model: Message,
-          required: true,
-          // include message_text to display and created_at for date formatting
-          attributes: ['receiver_id', 'sender_id'],
-        },
       },
     ],
-    order: [['created_at', 'DESC']],
+    order: [['createdAt', 'DESC']]
   })
     .then((dbMessageData) => {
       User.findAll({
@@ -53,21 +49,15 @@ router.get('/recent', (req, res) => {
           //res.json(dbUserData);
 
           const user = dbUserData.map((user) => user.get({ plain: true }));
-          // console.log(user);
+          //console.log(user);
 
           const messages = dbMessageData.map((message) =>
             message.get({ plain: true })
           );
-          // console.log(messages);
+          //console.log(messages);
 
-          const userLatest = getUserLatest(messages, user, sessionId);
+          let userLatest = getUserLatest(messages, user, sessionId);
 
-          // render all messages on homepage
-          res.render('chat', {
-            userLatest,
-            loggedIn: req.session.loggedIn,
-            chatHome: true,
-          });
           res.json(userLatest.latestChat);
         })
         .catch((err) => {

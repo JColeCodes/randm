@@ -27,9 +27,8 @@ async function sendMessageFormHandler(event) {
     });
 
 
-        if (!response.ok) {
-            alert(response.statusText);
-        }
+    if (!response.ok) {
+        alert(response.statusText);
     }
   }
 }

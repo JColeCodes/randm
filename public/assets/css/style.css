@@ -169,12 +169,14 @@ input:focus {
     background-color: var(--sidebar-color);
 }
 .recent-chat ul li {
-    padding: 20px;
     border-bottom: 2px solid var(--sidebar-highlight-color);
 }
 .recent-chat ul li.selected {
     border: none;
     background-color: var(--sidebar-highlight-color);
+}
+.recent-chat ul li div {
+    padding: 20px;
 }
 .recent-chat ul li h3.name {
     color: var(--main-color);
@@ -367,8 +369,8 @@ input:focus {
 }
 
 /* @MEDIA QUERIES FOR RESPONSIVE SITE */
+/* Max width: 1024 */
 @media screen and (max-width: 1024px) {
-    /* Display logo on left */
     .unlogged-page .logo {
         width: calc(40% - 40px);
         margin: 0 20px;
@@ -381,6 +383,7 @@ input:focus {
     }
 }
 
+/* Max width: 768 */
 @media screen and (max-width: 768px) {
     .unlogged-page {
         flex-direction: column;
@@ -390,7 +393,6 @@ input:focus {
         width: 80%;
         padding: 0 30px 30px;
     }
-    /* Display form on right */
     .unlogged-page .forms {
         width: 80%;
         margin: 0;
@@ -403,8 +405,12 @@ input:focus {
         font-size: 1em;
         border: none;
     }
+    .current-chat .messages ol li .message {
+        max-width: 60%;
+    }
 }
 
+/* Max width: 680 */
 @media screen and (max-width: 680px) {
     body {
         font-size: 18px;
@@ -428,7 +434,6 @@ input:focus {
     .logged-in main {
         position: relative;
     }
-    /* Recent Chat Names on left */
     .recent-chat {
         width: 80%;
         position: absolute;
@@ -466,12 +471,15 @@ input:focus {
         transition: all 0.5s ease-in-out;
         left: 100%;
     }
-    /* Current Chat Box on right */
     .current-chat {
         width: 100%;
     }
+    .current-chat .messages ol li .message {
+        max-width: 70%;
+    }
 }
 
+/* Max width 480 */
 @media screen and (max-width: 480px) {
     .recent-chat li.error-msg {
         margin: 0 50px 0 0;
@@ -506,5 +514,8 @@ input:focus {
     }
     .recent-chat::before {
         display: none;
+    }
+    .current-chat .messages ol li .message {
+        max-width: 80%;
     }
 }

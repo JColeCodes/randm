@@ -6,30 +6,22 @@ module.exports = {
         var currentChatter = user.filter(user => user.id == paramId);
         currentChatter = currentChatter[0];
         if (!paramId) {
-            var currentChatter = null;
+            currentChatter = null;
         }
 
-        console.log(paramId, currentChatter);
-
-        const latestChat = [];
+        let latestChat = [];
         if (messages) {
             messages.forEach(message => {
                 user.forEach(user => {
                     if (((message.sender_id !== sessionId && user.id === message.sender_id) || (message.receiver_id !== sessionId && user.id === message.receiver_id))) {
-                        user.latestMessage = message.message_text;
                         if (!latestChat.includes(user)) {
+                            user.latest_message = message.message_text;
                             latestChat.push(user);
                         }
-                        
                     }
                 });
             });
         }
-        
-        // if (req.params.id == sessionId) {
-        //     res.redirect('/chat');
-        //     return;
-        // }
 
         return { currentUser, currentChatter, latestChat };
     }

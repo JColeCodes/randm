@@ -5,7 +5,7 @@
       </div>
       <div class="welcome-info">
         {{#with userLatest.currentUser}}
-        Hello, {{ capitalize_first_name first_name }}! 
+        Hello, {{capitalize_first_name first_name}}! 
         <i class="fa-solid fa-circle-user"></i>
         {{/with}}
         <div class="user-options">
@@ -43,7 +43,7 @@
       <div class="user-info">
         <p class="in-chat">You're in a chat with</p>
         {{#with userLatest.currentChatter as |user|}}
-        <h2 class="chatter-name">{{ capitalize_first_name user.first_name }} {{ last_name_initial user.last_name}}</h2>
+        <h2 class="chatter-name">{{capitalize_first_name user.first_name}} {{last_name_initial user.last_name}}</h2>
         <p class="chatter-info">{{user.pronouns}}, {{user.gender}}, {{user.sexual_preference}}</p>
         <p class="chatter-bio">{{user.bio}}</p>
         {{/with}}
