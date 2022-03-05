@@ -17,13 +17,13 @@ const io = require('socket.io')(server);
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 // Setup for cookies use
 const sess = {
-  secret: process.env.SECRET_SECRET,
-  cookie: {},
-  resave: false,
-  saveUninitialized: true,
-  store: new SequelizeStore({
-    db: sequelize
-  })
+    secret: process.env.SECRET_SECRET,
+    cookie: {},
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
+    })
 };
 
 app.use(session(sess));
@@ -40,12 +40,12 @@ app.set('view engine', 'handlebars');
 
 // Socket.io
 io.on('connection', (socket) => {
-  socket.on('new message', (message) => {
-    io.emit('new message', message);
-  });
+    socket.on('new message', (message) => {
+        io.emit('new message', message);
+    });
 });
 
 // Turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
-  server.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
+    server.listen(PORT, () => console.log(`Now listening on port ${PORT}`));
 });
