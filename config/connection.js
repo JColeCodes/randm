@@ -8,6 +8,8 @@ let sequelize;
 // If connected to JawsDB
 if (process.env.JAWSDB_URL) {
   sequelize = new Sequelize(process.env.JAWSDB_URL);
+} else if (process.env.MYSQL_URL) {
+  sequelize = new Sequelize(process.env.MYSQL_URL);
 } else {
   // Else, create connection to our local database
   sequelize = new Sequelize(
